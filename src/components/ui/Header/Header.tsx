@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StatusBar, StyleSheet} from 'react-native'
 import {Icon, IconProps} from 'react-native-elements'
 import {device} from '../../stylesheet'
+import {colors} from '../../stylesheet'
 import {useNavigation} from '@react-navigation/native'
 
 interface HeaderProps {
@@ -16,7 +17,7 @@ export const Header: React.FC<HeaderProps> = ({title, isGoBack = true, icon}) =>
 
     return (
         <>
-            <StatusBar backgroundColor={'#025167'}/>
+            <StatusBar backgroundColor={colors.Allports}/>
             <View style={styles.container}>
                 <View style={styles.leftItems}>
                     {isGoBack &&
@@ -34,11 +35,11 @@ const styles = StyleSheet.create({
     container: {
         width: device.width,
         height: 50,
-        backgroundColor: '#216477',
+        backgroundColor: colors.Allports,
         flexDirection: "row",
         alignItems: 'center',
         paddingHorizontal: 10,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     leftItems: {
       alignItems: "center",

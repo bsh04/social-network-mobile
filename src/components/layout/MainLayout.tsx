@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, StyleProp} from 'react-native'
-import {device} from '../stylesheet'
+import {colors, device} from '../stylesheet'
+import {LinearGradient} from 'expo-linear-gradient';
 
 interface MainLayoutProps {
     propsStyles?: StyleProp<object>
@@ -8,11 +9,13 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({children, propsStyles}) => {
     return (
-        <View style={styles.container}>
-            <View style={[styles.wrapper, propsStyles]}>
-                {children}
+        <LinearGradient colors={[colors.Allports, '#4e4376']}>
+            <View style={styles.container}>
+                <View style={[styles.wrapper, propsStyles]}>
+                    {children}
+                </View>
             </View>
-        </View>
+        </LinearGradient>
     );
 };
 
