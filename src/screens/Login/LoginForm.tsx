@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
+import {useNavigation} from "@react-navigation/native"
 import {CustomInput} from "../../components/ui/Input/Input";
 import {NativeSyntheticEvent, TextInputChangeEventData, Text, StyleSheet} from "react-native";
-import {Icon} from "react-native-elements";
+import {Icon} from 'react-native-elements';
 import {LoginFormProps} from './LoginInterfaces'
 import {CustomButton} from "../../components/ui/Button/Button";
 import {colors, device} from "../../components/stylesheet";
 
 export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => {
+
+    const navigation = useNavigation()
 
     const [login, setLogin] = useState<string | undefined>("")
     const [password, setPassword] = useState<string | undefined>("")
@@ -37,7 +40,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
             <CustomButton
                 title={'Registration'}
                 buttonType={"primary"}
-                onPress={() => handleSubmit({login, password})}
+                onPress={() => navigation.navigate('Register')}
                 containerStyle={{width: device.width * .5}}
             />
         </>

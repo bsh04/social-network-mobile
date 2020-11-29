@@ -5,12 +5,13 @@ import {LinearGradient} from "expo-linear-gradient";
 
 interface MainLayoutProps {
     propsStyles?: StyleProp<object>
+    contentCenter?: boolean
 }
 
-export const MainLayout: React.FC<MainLayoutProps> = ({children, propsStyles}) => {
+export const MainLayout: React.FC<MainLayoutProps> = ({children, propsStyles, contentCenter}) => {
     return (
         <LinearGradient colors={[colors.WhiteSmoke, colors.Allports]}>
-            <View style={styles.container}>
+            <View style={[styles.container, contentCenter && {justifyContent: 'center'}]}>
                 <View style={[styles.wrapper, propsStyles]}>
                     {children}
                 </View>
@@ -23,10 +24,10 @@ const styles = StyleSheet.create({
     container: {
         width: device.width,
         alignItems: "center",
-        height: device.height
+        height: device.height - 50
     },
     wrapper: {
         width: device.width * .95,
-        height: device.height - 80,
+        height: device.height,
     }
 })
