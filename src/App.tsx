@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {registerRootComponent} from 'expo';
+import {registerRootComponent} from "expo";
 import {Router} from './router'
 
 function App() {

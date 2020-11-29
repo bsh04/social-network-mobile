@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
         padding: 20,
         width: device.width * .8,
         minHeight: 300,
-        height: device.height * .4,
         shadowOffset: {
             width: 0,
             height: 1,
@@ -41,8 +40,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textTransform: "uppercase",
         fontWeight: "bold",
-        borderBottomColor: colors.Black,
-        color: colors.WhiteSmoke,
+        borderBottomColor: colors.BlueLagoon,
+        color: colors.BlueLagoon,
         paddingBottom: 10,
         borderBottomWidth: 1,
     }

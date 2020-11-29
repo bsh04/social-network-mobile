@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     container: {
         width: device.width,
         height: 50,
-        backgroundColor: colors.Allports,
+        backgroundColor: colors.WhiteSmoke,
         flexDirection: "row",
         alignItems: 'center',
         paddingHorizontal: 10,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
       flexDirection: "row"
     },
     title: {
-        color: 'white',
+        color: colors.Black,
         paddingLeft: 20,
         fontWeight: "bold",
         fontSize: 18

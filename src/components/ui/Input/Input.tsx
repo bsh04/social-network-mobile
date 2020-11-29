@@ -25,7 +25,7 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
 
     const boxInterpolationColor = labelColorAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [colors.White, colors.Lemon]
+        outputRange: [colors.BlueLagoon, colors.WhiteSmoke]
     })
 
     const focusHandler = () => {
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     containerStyle: {},
     inputStyle: {
         paddingHorizontal: 10,
-        color: colors.White
+        color: colors.BlueLagoon
     },
     inputContainerStyle: {
         borderRadius: 10,
