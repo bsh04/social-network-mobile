@@ -17,7 +17,7 @@ export const Header: React.FC<HeaderProps> = ({title, isGoBack = true, icon}) =>
 
     return (
         <>
-            <StatusBar backgroundColor={colors.Allports}/>
+            <StatusBar backgroundColor={colors.BlueLagoon}/>
             <View style={styles.container}>
                 <View style={styles.leftItems}>
                     {isGoBack &&

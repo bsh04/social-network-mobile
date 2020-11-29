@@ -1,11 +1,12 @@
 import React, {useState, useRef} from 'react';
-import {Input, InputProps} from 'react-native-elements'
+import {Input, InputProps} from "react-native-elements"
 import {StyleSheet, View, Animated} from 'react-native'
 import {colors} from '../../stylesheet'
 import {AnimatedHandler} from './InputAnimation'
 
 interface CustomInputProps {
-    ref?: any
+    ref?: any,
+    firstInput?: boolean
 }
 
 export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
@@ -16,11 +17,12 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
                                                                          rightIcon,
                                                                          secureTextEntry,
                                                                          ref,
+                                                                         firstInput
                                                                      }) => {
 
     const [labelColorAnim] = useState<Animated.AnimatedProps<any>>(new Animated.Value(0))
 
-    const labelPositionAnim = useRef(new Animated.Value(30)).current;
+    const labelPositionAnim = useRef(new Animated.Value(5)).current;
     const labelSizeAnim = useRef(new Animated.Value(18)).current;
 
     const boxInterpolationColor = labelColorAnim.interpolate({
@@ -32,7 +34,7 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
         AnimatedHandler({
             duration: 200,
             params: [labelPositionAnim, labelSizeAnim, labelColorAnim],
-            value: [5, 14, 1]
+            value: [-20, 14, 1]
         })
     }
 
@@ -41,7 +43,7 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
             AnimatedHandler({
                 duration: 200,
                 params: [labelPositionAnim, labelSizeAnim, labelColorAnim],
-                value: [30, 18, 0]
+                value: [5, 18, 0]
             })
         } else {
             AnimatedHandler({
@@ -53,7 +55,7 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
     }
 
     return (
-        <View style={styles.component}>
+        <View style={[styles.component, firstInput && {marginTop: 25}]}>
             <Animated.Text style={[styles.label, {
                 top: labelPositionAnim,
                 fontSize: labelSizeAnim,
@@ -84,13 +86,13 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
 const styles = StyleSheet.create({
     component: {
         width: '100%',
-        height: 90,
+        height: 65,
         justifyContent: 'flex-end',
     },
     containerStyle: {},
     inputStyle: {
         paddingHorizontal: 10,
-        color: colors.BlueLagoon
+        color: colors.BlueLagoon,
     },
     inputContainerStyle: {
         borderRadius: 10,

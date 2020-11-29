@@ -17,11 +17,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
 
     return (
         <>
-            <CustomInput label={'login'} value={login}
+            <CustomInput label={'Login'} value={login}
+                         firstInput={true}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setLogin(e.nativeEvent.text)}
 
             />
-            <CustomInput label={'password'} value={password}
+            <CustomInput label={'Password'} value={password}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setPassword(e.nativeEvent.text)}
                          secureTextEntry={!openPassword}
                          rightIcon={<Icon name={openPassword ? "eye-with-line" : "eye"}

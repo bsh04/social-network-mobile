@@ -21,6 +21,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
     return (
         <>
             <CustomInput label={'First name'} value={firstName}
+                         firstInput={true}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setFirstName(e.nativeEvent.text)}
 
             />
