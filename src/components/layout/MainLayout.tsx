@@ -29,5 +29,10 @@ const styles = StyleSheet.create({
     wrapper: {
         width: device.width * .95,
         height: device.height,
+    },
+    theme: {
+        width: 100,
+        height: 100,
+        zIndex: 100000
     }
 })

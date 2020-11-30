@@ -1,9 +1,5 @@
-export interface LoginFields {
-    login: string | undefined
-    password: string | undefined
-}
-
+import {UserValues} from '../../types/interfaces'
 export interface LoginFormProps {
-    handleSubmit: ({login, password}: LoginFields) => void,
-    loading: boolean
+    handleSubmit: ({login, password}: UserValues) => void,
+    loading: boolean,
 }

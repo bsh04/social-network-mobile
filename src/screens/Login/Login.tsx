@@ -1,23 +1,25 @@
-import React, {useState} from 'react';
-import {useNavigation} from "@react-navigation/native"
+import React, {useEffect} from 'react';
 import {Header} from "../../components/ui/Header/Header";
 import {MainLayout} from "../../components/layout/MainLayout";
 import {Card} from "../../components/ui/Card";
 import {LoginForm} from "./LoginForm";
-import {LoginFields} from './LoginInterfaces'
 import {ScrollView} from "react-native";
+import {useLogin} from '../../hooks'
+import {userSelectors} from '../../redux/slices/userSlice'
+import {APIStatus, UserValues} from '../../types/interfaces'
+import {useSelector} from "react-redux";
 
 export const Login: React.FC = () => {
 
-    const navigation = useNavigation()
+    const {status, auth} = useLogin()
+    const user = useSelector(userSelectors.getUser())
 
-    const [loading, setLoading] = useState(false)
+    useEffect(() => {
+        console.log(user)
+    }, [user])
 
-    const handleSubmit = ({...props}: LoginFields) => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
+    const handleSubmit = ({...props}: UserValues) => {
+        auth(props)
     }
 
     return (
@@ -27,10 +29,9 @@ export const Login: React.FC = () => {
                 <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
                     <Card title={'Login'}>
                         {{
-                            body: <LoginForm handleSubmit={handleSubmit} loading={loading}/>
+                            body: <LoginForm handleSubmit={handleSubmit} loading={status === APIStatus.Loading}/>
                         }}
                     </Card>
-
                 </MainLayout>
             </ScrollView>
         </>

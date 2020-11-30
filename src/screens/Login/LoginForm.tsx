@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from "@react-navigation/native"
 import {CustomInput} from "../../components/ui/Input/Input";
 import {NativeSyntheticEvent, TextInputChangeEventData, Text, StyleSheet} from "react-native";
