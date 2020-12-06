@@ -1,6 +1,6 @@
 import React from "react";
 import {NavigationContainer} from '@react-navigation/native'
-import {LoginStack} from './stacks/LoginStack'
+import {LoginStack} from './stacks'
 import {DrawerNavigator} from './drawer/Drawer'
 import {userSelectors} from '../redux/slices/userSlice'
 import {useSelector} from 'react-redux'

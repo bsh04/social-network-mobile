@@ -7,10 +7,11 @@ export const colors = {
     Orange: '#fb9902',
     White: '#f8f8ff',
     WhiteSmoke: '#f5f5f5',
+    WhiteGray: '#aaa',
     Lemon: '#fff44f',
     Darkslategray: '#2a4041',
     Black: '#19191a',
-    Pelorous: '##17a2b8',
+    Pelorous: '#17a2b8',
 
     ButtonTypes: {
         BGColor: {

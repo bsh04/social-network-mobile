@@ -10,7 +10,7 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({children, propsStyles, contentCenter}) => {
     return (
-        <LinearGradient colors={[colors.WhiteSmoke, colors.WhiteSmoke]}>
+        <LinearGradient colors={[colors.White, colors.WhiteSmoke]}>
             <View style={[styles.container, contentCenter && {justifyContent: 'center'}]}>
                 <View style={[styles.wrapper, propsStyles]}>
                     {children}
