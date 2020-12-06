@@ -1,0 +1,6 @@
+export * from './Login/Login'
+export * from './Reset/ResetPassword'
+export * from './Register/Register'
+export * from './Dialogs/Dialogs'
+export * from './Home/Home'
+export * from './Profile/Profile'

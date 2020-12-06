@@ -8,8 +8,11 @@ import {useLogin} from '../../hooks'
 import {userSelectors} from '../../redux/slices/userSlice'
 import {APIStatus, UserValues} from '../../types/interfaces'
 import {useSelector} from "react-redux";
+import {useNavigation} from '@react-navigation/native'
 
 export const Login: React.FC = () => {
+
+    // const navigation = useNavigation()
 
     const {status, auth} = useLogin()
     const user = useSelector(userSelectors.getUser())

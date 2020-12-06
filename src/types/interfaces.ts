@@ -8,4 +8,5 @@ export enum APIStatus {
 export interface UserValues {
     login?: string
     password?: string
+    token?: string
 }

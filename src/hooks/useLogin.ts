@@ -13,9 +13,9 @@ export const useLogin = () => {
     const auth = useCallback((payload: UserValues) => {
         dispatch(startAuth())
 
-        // setTimeout(() => {
+        setTimeout(() => {
             dispatch(successAuth(payload))
-        // }, 1000)
+        }, 1000)
     }, [dispatch])
 
     return {

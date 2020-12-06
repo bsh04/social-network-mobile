@@ -10,7 +10,8 @@ const initialState = {
     status: APIStatus.Initial,
     data: {
         password: '',
-        login: ''
+        login: '',
+        token: undefined
     }
 } as SliceState
 
@@ -26,6 +27,7 @@ export const userSlice = createSlice({
         },
         successAuth(state: SliceState, action: PayloadAction<UserValues>) {
             state.data = action.payload
+            state.data.token = '12345'
             state.status = APIStatus.Success
         }
     }
