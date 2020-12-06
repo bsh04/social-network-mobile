@@ -1,12 +1,29 @@
 import React from 'react';
-import {Text} from "react-native";
+import {ScrollView, Text} from "react-native";
 import {Header} from "../../components/ui/Header/Header";
+import {MainLayout} from "../../components/layout/MainLayout";
+import {Card} from "../../components/ui/Card";
+import {APIStatus} from "../../types/interfaces";
+import {ResetPasswordForm} from "./ResetPasswordForm";
 
 export const ResetPassword: React.FC = () => {
+
+    const handleSubmit: (login?: string) => void = (login) => {
+        console.log(login)
+    }
+
     return (
-        <Text>
+        <>
             <Header title={'Reset password'}/>
-         Reset Password Screen
-        </Text>
+            <ScrollView>
+                <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
+                    <Card title={'Reset password'}>
+                        {{
+                            body: <ResetPasswordForm handleSubmit={handleSubmit}/>
+                        }}
+                    </Card>
+                </MainLayout>
+            </ScrollView>
+        </>
     );
 };

@@ -1,12 +1,13 @@
 import React, {useState, useRef} from 'react';
 import {Input, InputProps} from "react-native-elements"
-import {StyleSheet, View, Animated} from 'react-native'
+import {StyleSheet, View, Animated, Text} from 'react-native'
 import {colors} from '../../stylesheet'
 import {AnimatedHandler} from './InputAnimation'
 
 interface CustomInputProps {
     ref?: any,
-    firstInput?: boolean
+    firstInput?: boolean,
+    additional?: string
 }
 
 export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
@@ -17,7 +18,8 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
                                                                          rightIcon,
                                                                          secureTextEntry,
                                                                          ref,
-                                                                         firstInput
+                                                                         firstInput,
+                                                                         additional
                                                                      }) => {
 
     const [labelColorAnim] = useState<Animated.AnimatedProps<any>>(new Animated.Value(0))
@@ -27,7 +29,7 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
 
     const boxInterpolationColor = labelColorAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [colors.BlueLagoon, colors.WhiteSmoke]
+        outputRange: [colors.BlueLagoon, colors.Blue]
     })
 
     const focusHandler = () => {
@@ -78,6 +80,7 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
                 selectionColor={colors.BlueLagoon}
                 secureTextEntry={secureTextEntry}
             />
+            <Text style={styles.additional}>{additional}</Text>
         </View>
     )
 }
@@ -102,5 +105,10 @@ const styles = StyleSheet.create({
     label: {
         position: "absolute",
         left: 25,
+    },
+    additional: {
+        position: "absolute",
+        fontSize: 10,
+        paddingHorizontal: 20
     }
 })

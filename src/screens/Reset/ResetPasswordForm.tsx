@@ -3,48 +3,39 @@ import {useNavigation} from "@react-navigation/native"
 import {CustomInput} from "../../components/ui/Input/Input";
 import {NativeSyntheticEvent, TextInputChangeEventData, Text, StyleSheet} from "react-native";
 import {Icon} from 'react-native-elements';
-import {LoginFormProps} from './LoginInterfaces'
+import {ResetPasswordProps} from './ResetPasswordInterfaces'
 import {CustomButton} from "../../components/ui/Button/Button";
 import {colors, device} from "../../components/stylesheet";
 
-export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => {
+export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({handleSubmit, loading}) => {
 
     const navigation = useNavigation()
 
     const [login, setLogin] = useState<string | undefined>("")
-    const [password, setPassword] = useState<string | undefined>("")
-    const [openPassword, setOpenPassword] = useState<boolean>(false)
 
     return (
         <>
             <CustomInput label={'Login'} value={login}
                          firstInput={true}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setLogin(e.nativeEvent.text)}
+                         additional={'To reset your password, we will send a one-time code to your mail'}
 
             />
-            <CustomInput label={'Password'} value={password}
-                         onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setPassword(e.nativeEvent.text)}
-                         secureTextEntry={!openPassword}
-                         rightIcon={<Icon name={openPassword ? "eye-with-line" : "eye"}
-                                          type={"entypo"}
-                                          color={colors.BlueLagoon}
-                                          onPress={() => setOpenPassword(!openPassword)}/>}
-            />
             <CustomButton
-                title={'Sing in'}
+                title={'Get code'}
                 buttonType={"success"}
-                onPress={() => handleSubmit({login, password})}
+                onPress={() => handleSubmit(login)}
                 loading={loading}
-                containerStyle={{width: device.width * .5}}
+                containerStyle={{width: device.width * .5, marginTop: 10}}
             />
-            <Text style={styles.text}>You forgot your password?</Text>
+            <Text style={styles.text}>Do you know your password?</Text>
             <CustomButton
                 title={'Reset password'}
                 buttonType={"info"}
                 onPress={() => navigation.navigate('ResetPassword')}
                 containerStyle={{width: device.width * .5}}
             />
-            <Text style={[styles.text, {paddingTop: 30}]}>You haven't account?</Text>
+            <Text style={[styles.text, {paddingTop: 30}]}>Do you want to create a new account?</Text>
             <CustomButton
                 title={'Registration'}
                 buttonType={"primary"}

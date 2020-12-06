@@ -10,6 +10,7 @@ export const colors = {
     Lemon: '#fff44f',
     Darkslategray: '#2a4041',
     Black: '#19191a',
+    Pelorous: '##17a2b8',
 
     ButtonTypes: {
         BGColor: {
