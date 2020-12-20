@@ -3,24 +3,40 @@ import {Header} from "../../components/ui/Header/Header";
 import {MainLayout} from "../../components/layout/MainLayout";
 import {Card} from "../../components/ui/Card";
 import {LoginForm} from "./LoginForm";
-import {ScrollView} from "react-native";
+import {Alert, ScrollView} from "react-native";
 import {useLogin} from '../../hooks'
 import {userSelectors} from '../../redux/slices/userSlice'
-import {APIStatus, UserValues} from '../../types/interfaces'
+import {APIStatus} from '../../types/interfaces'
 import {useSelector} from "react-redux";
-import {useHttp} from '../../api/auth'
 import {useNavigation} from '@react-navigation/native'
+import {LoginFormParams} from "./LoginInterfaces";
 
 export const Login: React.FC = () => {
 
     const navigation = useNavigation()
-    const {status, auth} = useLogin()
+    const {status, auth, message} = useLogin()
 
     const user = useSelector(userSelectors.getUser())
 
-    const handleSubmit = ({...props}: UserValues) => {
-        auth(props)
+    const handleSubmit = ({...props}: LoginFormParams) => {
+        if (props.email.trim() && props.password.trim()) {
+            auth(props)
+        } else {
+            Alert.alert(
+                "Attention",
+                "Fill in all the fields"
+            )
+        }
     }
+
+    useEffect(() => {
+        if (status === APIStatus.Failure) {
+            Alert.alert(
+                "Error",
+                message,
+            )
+        }
+    }, [status])
 
     return (
         <>

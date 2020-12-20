@@ -11,16 +11,16 @@ interface CustomInputProps {
 }
 
 export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
-                                                                         onChange,
-                                                                         label,
-                                                                         value,
-                                                                         onSubmitEditing,
-                                                                         rightIcon,
-                                                                         secureTextEntry,
-                                                                         ref,
-                                                                         firstInput,
-                                                                         additional
-                                                                     }) => {
+     onChange,
+     label,
+     value,
+     onSubmitEditing,
+     rightIcon,
+     secureTextEntry,
+     ref,
+     firstInput,
+     additional
+}) => {
 
     const [labelColorAnim] = useState<Animated.AnimatedProps<any>>(new Animated.Value(0))
 

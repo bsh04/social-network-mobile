@@ -11,15 +11,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
 
     const navigation = useNavigation()
 
-    const [login, setLogin] = useState<string | undefined>("")
-    const [password, setPassword] = useState<string | undefined>("")
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
     const [openPassword, setOpenPassword] = useState<boolean>(false)
 
     return (
         <>
-            <CustomInput label={'Login'} value={login}
+            <CustomInput label={'E-mail'} value={email}
                          firstInput={true}
-                         onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setLogin(e.nativeEvent.text)}
+                         onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setEmail(e.nativeEvent.text)}
 
             />
             <CustomInput label={'Password'} value={password}
@@ -33,7 +33,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
             <CustomButton
                 title={'Sing in'}
                 buttonType={"success"}
-                onPress={() => handleSubmit({login, password})}
+                onPress={() => handleSubmit({email, password})}
                 loading={loading}
                 containerStyle={{width: device.width * .5}}
             />

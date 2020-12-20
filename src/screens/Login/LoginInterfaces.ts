@@ -1,5 +1,9 @@
-import {UserValues} from '../../types/interfaces'
+export interface LoginFormParams {
+    email: string
+    password: string
+}
+
 export interface LoginFormProps {
-    handleSubmit: ({login, password}: UserValues) => void,
+    handleSubmit: ({email, password}: LoginFormParams) => void,
     loading: boolean,
 }
