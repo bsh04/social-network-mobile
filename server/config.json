@@ -1,5 +1,0 @@
-{
-  "PORT": 5000,
-  "MongoUri": "mongodb+srv://admin:password12345@cluster0.qbb3h.mongodb.net/app?retryWrites=true&w=majority",
-  "JwtToken": "SocNetN"
-}

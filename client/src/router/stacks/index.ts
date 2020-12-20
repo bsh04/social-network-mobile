@@ -1,6 +1,0 @@
-export * from './CameraStack'
-export * from './DialogsStack'
-export * from './HomeStack'
-export * from './LoginStack'
-export * from './ProfileStack'
-export * from './NewsStack'
