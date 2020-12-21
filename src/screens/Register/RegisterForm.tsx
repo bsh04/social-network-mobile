@@ -1,6 +1,14 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {CustomInput} from "../../components/ui/Input/Input";
-import {Alert, NativeSyntheticEvent, StyleSheet, Text, TextInputChangeEventData} from "react-native";
+import {
+    Alert,
+    NativeSyntheticEvent,
+    StyleSheet,
+    Text,
+    TextInput,
+    TextInputChangeEventData,
+    TextInputEndEditingEventData, TextInputProps, TextInputState, TextInputSubmitEditingEventData
+} from "react-native";
 import {Icon} from "react-native-elements";
 import {colors, device} from "../../components/stylesheet";
 import {CustomButton} from "../../components/ui/Button/Button";
@@ -18,6 +26,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
     const [confirmPassword, setConfirmPassword] = useState<string>('')
     const [openPasswords, setOpenPasswords] = useState<Array<boolean>>([false, false])
 
+    const secondNameRef = useRef<TextInputProps & TextInput>(null)
+    const emailRef = useRef<TextInputProps & TextInput>(null)
+    const passwordRef = useRef<TextInputProps & TextInput>(null)
+    const confPasswordRef = useRef<TextInputProps & TextInput>(null)
+
     const validator = () => {
         if (password !== confirmPassword) {
             Alert.alert("Error", "Passwords do not match")
@@ -31,15 +44,17 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
             <CustomInput label={'First name'} value={firstName}
                          firstInput={true}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setFirstName(e.nativeEvent.text)}
-
+                         onSubmitEditing={() => secondNameRef.current?.focus()}
             />
             <CustomInput label={'Second name'} value={secondName}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setSecondName(e.nativeEvent.text)}
-
+                         ref={secondNameRef}
+                         onSubmitEditing={() => emailRef.current?.focus()}
             />
             <CustomInput label={'E-mail'} value={email}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setEmail(e.nativeEvent.text)}
-
+                         ref={emailRef}
+                         onSubmitEditing={() => passwordRef.current?.focus()}
             />
             <CustomInput label={'Password'} value={password}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setPassword(e.nativeEvent.text)}
@@ -48,6 +63,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
                                           type={"entypo"}
                                           color={colors.BlueLagoon}
                                           onPress={() => setOpenPasswords([!openPasswords[0], openPasswords[1]])}/>}
+                         ref={passwordRef}
+                         onSubmitEditing={() => confPasswordRef.current?.focus()}
             />
             <CustomInput label={'Confirm password'} value={confirmPassword}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setConfirmPassword(e.nativeEvent.text)}
@@ -56,6 +73,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
                                           type={"entypo"}
                                           color={colors.BlueLagoon}
                                           onPress={() => setOpenPasswords([openPasswords[0], !openPasswords[1]])}/>}
+                         ref={confPasswordRef}
             />
             <CustomButton
                 title={'Registration'}

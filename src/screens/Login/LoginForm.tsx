@@ -1,7 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigation} from "@react-navigation/native"
 import {CustomInput} from "../../components/ui/Input/Input";
-import {NativeSyntheticEvent, TextInputChangeEventData, Text, StyleSheet} from "react-native";
+import {
+    NativeSyntheticEvent,
+    TextInputChangeEventData,
+    Text,
+    StyleSheet,
+    TextInput,
+    TextInputProps
+} from "react-native";
 import {Icon} from 'react-native-elements';
 import {LoginFormProps} from './LoginInterfaces'
 import {CustomButton} from "../../components/ui/Button/Button";
@@ -14,13 +21,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [openPassword, setOpenPassword] = useState<boolean>(false)
+    const passwordRef = useRef<TextInputProps & TextInput>(null)
 
     return (
         <>
             <CustomInput label={'E-mail'} value={email}
                          firstInput={true}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setEmail(e.nativeEvent.text)}
-
+                         onSubmitEditing={() => passwordRef.current?.focus()}
             />
             <CustomInput label={'Password'} value={password}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setPassword(e.nativeEvent.text)}
@@ -29,6 +37,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
                                           type={"entypo"}
                                           color={colors.BlueLagoon}
                                           onPress={() => setOpenPassword(!openPassword)}/>}
+                         ref={passwordRef}
+
             />
             <CustomButton
                 title={'Sing in'}

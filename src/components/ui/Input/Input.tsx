@@ -4,23 +4,21 @@ import {StyleSheet, View, Animated, Text} from 'react-native'
 import {colors} from '../../stylesheet'
 import {AnimatedHandler} from './InputAnimation'
 
-interface CustomInputProps {
-    ref?: any,
+interface CustomInputProps extends InputProps {
     firstInput?: boolean,
     additional?: string
 }
 
-export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
-     onChange,
-     label,
-     value,
-     onSubmitEditing,
-     rightIcon,
-     secureTextEntry,
-     ref,
-     firstInput,
-     additional
-}) => {
+export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
+                                                                               onChange,
+                                                                               label,
+                                                                               value,
+                                                                               onSubmitEditing,
+                                                                               rightIcon,
+                                                                               secureTextEntry,
+                                                                               firstInput,
+                                                                               additional
+                                                                           }, ref:React.ForwardedRef<any>) => {
 
     const [labelColorAnim] = useState<Animated.AnimatedProps<any>>(new Animated.Value(0))
 
@@ -83,7 +81,7 @@ export const CustomInput: React.FC<InputProps & CustomInputProps> = ({
             <Text style={styles.additional}>{additional}</Text>
         </View>
     )
-}
+})
 
 
 const styles = StyleSheet.create({
