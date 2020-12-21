@@ -29,7 +29,6 @@ export const Profile: React.FC = () => {
 
     const handleLogOut = () => {
         dispatch(userSlice.actions.reset())
-        navigation.navigate("Login")
     }
 
     return (

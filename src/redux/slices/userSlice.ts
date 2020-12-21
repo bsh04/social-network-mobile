@@ -31,13 +31,11 @@ export const userSlice = createSlice({
         },
         successAuth(state: SliceState, action: PayloadAction<UserValues>) {
             state.data = action.payload
-            AsyncStorage.setItem("token", action.payload.token!).then(() => {})
             state.status = APIStatus.Success
         },
-        setToken(state: SliceState) {
-            AsyncStorage.getItem("token").then(res => {
-                state.data.token = res || undefined
-            })
+        setToken(state: SliceState, action: PayloadAction<string | undefined>) {
+            console.log(action)
+            state.data.token = action.payload
             state.status = APIStatus.Initial
         },
         reset(state: SliceState) {

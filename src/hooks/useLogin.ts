@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useCallback, useState} from "react";
 import {UserValues} from '../types/interfaces'
 import firebase from "firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useLogin = () => {
     const dispatch = useDispatch()
@@ -26,7 +27,9 @@ export const useLogin = () => {
                         token: res.user?.uid,
                         password: res.user?.providerId
                     } as UserValues
-                    dispatch(successAuth(userData))
+                    if (res.user?.uid) {
+                        AsyncStorage.setItem("@token", res.user.uid).then(() => dispatch(successAuth(userData)))
+                    }
             })
                 .catch(e => {
                     setMessage(e.message)
