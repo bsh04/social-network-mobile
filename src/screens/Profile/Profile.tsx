@@ -2,10 +2,10 @@ import React from 'react';
 import {Header} from "../../components/ui/Header/Header";
 import {Alert, Text} from 'react-native'
 import {CustomButton} from "../../components/ui/Button/Button"
-import firebase from "firebase";
 import {useNavigation} from "@react-navigation/native"
-import {userSlice} from "../../redux/slices/userSlice"
+import {loginSlice} from "../../redux/slices/loginSlice"
 import {useDispatch} from "react-redux"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Profile: React.FC = () => {
     const navigation = useNavigation()
@@ -28,7 +28,9 @@ export const Profile: React.FC = () => {
     }
 
     const handleLogOut = () => {
-        dispatch(userSlice.actions.reset())
+        AsyncStorage.removeItem("@token").then(() => {
+            dispatch(loginSlice.actions.reset())
+        })
     }
 
     return (

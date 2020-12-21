@@ -1,4 +1,4 @@
-import {userSlice, userSelectors} from '../redux/slices/userSlice'
+import {loginSlice, loginSelectors} from '../redux/slices/loginSlice'
 import {useDispatch, useSelector} from 'react-redux'
 import {useCallback, useState} from "react";
 import {UserValues} from '../types/interfaces'
@@ -8,9 +8,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const useLogin = () => {
     const dispatch = useDispatch()
 
-    const {failAuth, startAuth, successAuth} = userSlice.actions
+    const {failAuth, startAuth, successAuth} = loginSlice.actions
 
-    const status = useSelector(userSelectors.getStatus())
+    const status = useSelector(loginSelectors.getStatus())
     const [message, setMessage] = useState<string | undefined>(undefined)
 
     const auth = useCallback((payload: UserValues) => {

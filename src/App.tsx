@@ -7,7 +7,7 @@ import {store} from './redux/store/store'
 import firebase from "firebase";
 import {firebaseConfig} from "./config"
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {userSlice} from "./redux/slices/userSlice"
+import {loginSlice} from "./redux/slices/loginSlice"
 
 function App() {
     const [ready, setReady] = useState(false)
@@ -19,7 +19,7 @@ function App() {
     useEffect(() => {
         firebase.initializeApp(firebaseConfig);
         getToken().then((res) => {
-            dispatch(userSlice.actions.setToken(res ?? undefined))
+            dispatch(loginSlice.actions.setToken(res ?? undefined))
             setReady(true)
         })
     }, [])

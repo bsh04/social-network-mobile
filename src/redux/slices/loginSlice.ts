@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {APIStatus, UserValues} from '../../types/interfaces'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface SliceState {
     status: APIStatus
@@ -19,8 +18,8 @@ const initialState = {
     }
 } as SliceState
 
-export const userSlice = createSlice({
-    name: 'userSlice',
+export const loginSlice = createSlice({
+    name: 'loginSlice',
     initialState,
     reducers: {
         startAuth(state: SliceState) {
@@ -34,7 +33,6 @@ export const userSlice = createSlice({
             state.status = APIStatus.Success
         },
         setToken(state: SliceState, action: PayloadAction<string | undefined>) {
-            console.log(action)
             state.data.token = action.payload
             state.status = APIStatus.Initial
         },
@@ -46,10 +44,10 @@ export const userSlice = createSlice({
 })
 
 interface Store {
-    user: SliceState
+    login: SliceState
 }
 
-export const userSelectors = {
-    getStatus: () => (state: Store) => state.user.status,
-    getUser: () => (state: Store) => state.user.data
+export const loginSelectors = {
+    getStatus: () => (state: Store) => state.login.status,
+    getUser: () => (state: Store) => state.login.data
 }

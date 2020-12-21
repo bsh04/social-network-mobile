@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {CustomInput} from "../../components/ui/Input/Input";
-import {NativeSyntheticEvent, StyleSheet, Text, TextInputChangeEventData} from "react-native";
+import {Alert, NativeSyntheticEvent, StyleSheet, Text, TextInputChangeEventData} from "react-native";
 import {Icon} from "react-native-elements";
 import {colors, device} from "../../components/stylesheet";
 import {CustomButton} from "../../components/ui/Button/Button";
@@ -11,12 +11,20 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
 
     const navigation = useNavigation()
 
-    const [firstName, setFirstName] = useState<string | undefined>('')
-    const [secondName, setSecondName] = useState<string | undefined>('')
-    const [login, setLogin] = useState<string | undefined>('')
-    const [password, setPassword] = useState<string | undefined>('')
-    const [confirmPassword, setConfirmPassword] = useState<string | undefined>('')
+    const [firstName, setFirstName] = useState<string>('')
+    const [secondName, setSecondName] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [confirmPassword, setConfirmPassword] = useState<string>('')
     const [openPasswords, setOpenPasswords] = useState<Array<boolean>>([false, false])
+
+    const validator = () => {
+        if (password !== confirmPassword) {
+            Alert.alert("Error", "Passwords do not match")
+            return
+        }
+        handleSubmit({firstName, secondName, email, password})
+    }
 
     return (
         <>
@@ -29,8 +37,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setSecondName(e.nativeEvent.text)}
 
             />
-            <CustomInput label={'Login'} value={login}
-                         onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setLogin(e.nativeEvent.text)}
+            <CustomInput label={'E-mail'} value={email}
+                         onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setEmail(e.nativeEvent.text)}
 
             />
             <CustomInput label={'Password'} value={password}
@@ -52,7 +60,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
             <CustomButton
                 title={'Registration'}
                 buttonType={"success"}
-                onPress={() => handleSubmit({firstName, secondName, login, password})}
+                onPress={() => validator()}
                 loading={loading}
                 containerStyle={{width: device.width * .5}}
             />

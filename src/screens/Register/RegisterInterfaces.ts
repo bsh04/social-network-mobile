@@ -1,8 +1,8 @@
 export interface RegisterFields {
-    firstName: string | undefined
-    secondName: string | undefined
-    login: string | undefined
-    password: string | undefined
+    firstName: string
+    secondName: string
+    email: string
+    password: string
 }
 
 export interface RegisterFormProps {
