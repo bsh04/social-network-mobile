@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, Text} from "react-native";
 import {Header} from "../../components/ui/Header/Header";
-import {MainLayout} from "../../components/layout/MainLayout";
+import {LoginLayout} from "../../components/layout/LoginLayout";
 import {Card} from "../../components/ui/Card";
 import {APIStatus} from "../../types/interfaces";
 import {ResetPasswordForm} from "./ResetPasswordForm";
@@ -16,13 +16,13 @@ export const ResetPassword: React.FC = () => {
         <>
             <Header title={'Сброс пароля'}/>
             <ScrollView>
-                <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
+                <LoginLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
                     <Card title={'Введите E-mail'}>
                         {{
                             body: <ResetPasswordForm handleSubmit={handleSubmit}/>
                         }}
                     </Card>
-                </MainLayout>
+                </LoginLayout>
             </ScrollView>
         </>
     );

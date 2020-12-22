@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Alert, ScrollView} from "react-native";
 import {Header} from "../../components/ui/Header/Header";
-import {MainLayout} from "../../components/layout/MainLayout";
+import {LoginLayout} from "../../components/layout/LoginLayout";
 import {Card} from "../../components/ui/Card";
 import {RegisterForm} from './RegisterForm'
 import {APIStatus} from "../../types/interfaces";
@@ -35,13 +35,13 @@ export const Register: React.FC = () => {
         <>
             <Header title={'Регистрация'} isGoBack={true}/>
             <ScrollView>
-                <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
+                <LoginLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
                     <Card title={'Введите данные'}>
                         {{
                             body: <RegisterForm handleSubmit={handleSubmit} loading={status === APIStatus.Loading}/>
                         }}
                     </Card>
-                </MainLayout>
+                </LoginLayout>
             </ScrollView>
         </>
     );

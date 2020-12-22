@@ -27,6 +27,9 @@ export const loginSlice = createSlice({
         failAuth(state: SliceState) {
             state.status = APIStatus.Failure
         },
+        setUser(state: SliceState, action: PayloadAction<UserValues>) {
+          state.data = action.payload
+        },
         successAuth(state: SliceState, action: PayloadAction<UserValues>) {
             state.data = action.payload
             state.status = APIStatus.Success

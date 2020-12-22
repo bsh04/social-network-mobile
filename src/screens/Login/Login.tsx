@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Header} from "../../components/ui/Header/Header";
-import {MainLayout} from "../../components/layout/MainLayout";
+import {LoginLayout} from "../../components/layout/LoginLayout";
 import {Card} from "../../components/ui/Card";
 import {LoginForm} from "./LoginForm";
 import {Alert, ScrollView} from "react-native";
@@ -35,13 +35,13 @@ export const Login: React.FC = () => {
         <>
             <Header title={'Вход в профиль'} isGoBack={false}/>
             <ScrollView>
-                <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
+                <LoginLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
                     <Card title={'Введите данные'}>
                         {{
                             body: <LoginForm handleSubmit={handleSubmit} loading={status === APIStatus.Loading}/>
                         }}
                     </Card>
-                </MainLayout>
+                </LoginLayout>
             </ScrollView>
         </>
     );

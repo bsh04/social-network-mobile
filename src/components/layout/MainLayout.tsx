@@ -1,38 +1,18 @@
 import React from 'react';
-import {StyleSheet, View, StyleProp} from 'react-native'
-import {colors, device} from '../stylesheet'
-import {LinearGradient} from "expo-linear-gradient";
+import {View, StyleSheet} from "react-native";
+import {device} from "../stylesheet";
 
-interface MainLayoutProps {
-    propsStyles?: StyleProp<object>
-    contentCenter?: boolean
-}
-
-export const MainLayout: React.FC<MainLayoutProps> = ({children, propsStyles, contentCenter}) => {
+export const MainLayout: React.FC = ({children}) => {
     return (
-        <LinearGradient colors={[colors.White, colors.WhiteSmoke]}>
-            <View style={[styles.container, contentCenter && {justifyContent: 'center'}]}>
-                <View style={[styles.wrapper, propsStyles]}>
-                    {children}
-                </View>
-            </View>
-        </LinearGradient>
+        <View style={styles.container}>
+            {children}
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         width: device.width,
-        alignItems: "center",
-        height: device.height - 50
-    },
-    wrapper: {
-        width: device.width * .95,
-        height: device.height,
-    },
-    theme: {
-        width: 100,
-        height: 100,
-        zIndex: 100000
+        padding: 10,
     }
 })

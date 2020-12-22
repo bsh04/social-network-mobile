@@ -6,20 +6,26 @@ import {Provider, useDispatch} from 'react-redux'
 import {store} from './redux/store/store'
 import firebase from "firebase";
 import {firebaseConfig} from "./config"
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {loginSlice} from "./redux/slices/loginSlice"
+import {UserValues} from "./types/interfaces";
 
 function App() {
     const [ready, setReady] = useState(false)
     const dispatch = useDispatch()
-    const getToken = async () => {
-        return await AsyncStorage.getItem("@token")
-    }
 
     useEffect(() => {
         firebase.initializeApp(firebaseConfig);
-        getToken().then((res) => {
-            dispatch(loginSlice.actions.setToken(res ?? undefined))
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                const userData = {
+                    email: user?.email,
+                    photoURL: user?.photoURL,
+                    phoneNumber: user?.phoneNumber,
+                    displayName: user?.displayName,
+                    token: user?.uid,
+                } as UserValues
+                dispatch(loginSlice.actions.setUser(userData))
+            }
             setReady(true)
         })
     }, [])
