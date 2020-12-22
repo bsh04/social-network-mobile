@@ -9,15 +9,15 @@ import {RegisterFields} from "./RegisterInterfaces";
 import {useRegister} from "../../hooks/useRegister"
 
 export const Register: React.FC = () => {
-    const {register, message, status} = useRegister()
+    const {register, status} = useRegister()
 
     const handleSubmit = ({...props}: RegisterFields) => {
         if (props.password.trim() && props.password.trim() && props.secondName.trim() && props.firstName.trim()) {
             register(props)
         } else {
             Alert.alert(
-                "Attention",
-                "Fill in all the fields"
+                "Внимание",
+                "Все поля должны быть заполнены"
             )
         }
     }
@@ -25,18 +25,18 @@ export const Register: React.FC = () => {
     useEffect(() => {
         if (status === APIStatus.Failure) {
             Alert.alert(
-                "Error",
-                message,
+                "Ошибка",
+                "Введите корректный E-mail",
             )
         }
     }, [status])
 
     return (
         <>
-            <Header title={'Registration'} isGoBack={true}/>
+            <Header title={'Регистрация'} isGoBack={true}/>
             <ScrollView>
                 <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
-                    <Card title={'Registration'}>
+                    <Card title={'Введите данные'}>
                         {{
                             body: <RegisterForm handleSubmit={handleSubmit} loading={status === APIStatus.Loading}/>
                         }}

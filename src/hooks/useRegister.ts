@@ -10,7 +10,6 @@ export const useRegister = () => {
     const dispatch = useDispatch()
 
     const [status, setStatus] = useState<APIStatus>(APIStatus.Initial)
-    const [message, setMessage] = useState<string | undefined>(undefined)
 
     const register = useCallback((payload: RegisterFields) => {
         setStatus(APIStatus.Loading)
@@ -40,15 +39,13 @@ export const useRegister = () => {
                 })
             })
             .catch(e => {
-                setMessage(e.message)
                 setStatus(APIStatus.Failure)
             })
 
-    }, [dispatch, message, status])
+    }, [dispatch, status])
 
     return {
         register,
         status,
-        message
     }
 }

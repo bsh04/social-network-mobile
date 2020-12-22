@@ -11,7 +11,6 @@ export const useLogin = () => {
     const {failAuth, startAuth, successAuth} = loginSlice.actions
 
     const status = useSelector(loginSelectors.getStatus())
-    const [message, setMessage] = useState<string | undefined>(undefined)
 
     const auth = useCallback((payload) => {
         dispatch(startAuth())
@@ -31,15 +30,13 @@ export const useLogin = () => {
                     }
             })
                 .catch(e => {
-                    setMessage(e.message)
                     dispatch(failAuth())
                 })
 
-    }, [dispatch, message])
+    }, [dispatch])
 
     return {
         auth,
         status,
-        message
     }
 }

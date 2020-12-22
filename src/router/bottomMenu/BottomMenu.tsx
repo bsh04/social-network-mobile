@@ -19,23 +19,23 @@ export const BottomTabs: React.FC = () => {
             inactiveTintColor: colors.WhiteGray
         }}
         >
-            <Tab.Screen name="Home" component={HomeStack} options={{
+            <Tab.Screen name="Главная" component={HomeStack} options={{
                 tabBarIcon: ({color, size}) => <Icon name={"home"} type={"entypo"} color={color} size={size}/>,
                 tabBarBadge: '1',
                 tabBarBadgeStyle: {paddingTop: 1.5},
             }}/>
-            <Tab.Screen name="News" component={NewsStack} options={{
+            <Tab.Screen name="Новости" component={NewsStack} options={{
                 tabBarIcon: ({color, size}) => <Icon name={"news"} type={"entypo"} color={color} size={size}/>
             }}/>
-            <Tab.Screen name="Dialogs" component={DialogsStack} options={{
+            <Tab.Screen name="Диалоги" component={DialogsStack} options={{
                 tabBarIcon: ({color, size}) => <Icon name={"message"} type={"material"} color={color} size={size}/>,
                 tabBarBadge: '9+',
                 tabBarBadgeStyle: {paddingTop: 1.5},
             }}/>
-            <Tab.Screen name="Profile" component={ProfileStack} options={{
+            <Tab.Screen name="Профиль" component={ProfileStack} options={{
                 tabBarIcon: ({color, size}) => <Icon name={"person"} type={"material"} color={color} size={size}/>
             }}/>
-            <Tab.Screen name="Camera" component={CameraStack} options={{
+            <Tab.Screen name="Камера" component={CameraStack} options={{
                 tabBarIcon: ({color, size}) => <Icon name={"camera"} type={"font-awesome"} color={color} size={size}/>
             }}/>
         </Tab.Navigator>

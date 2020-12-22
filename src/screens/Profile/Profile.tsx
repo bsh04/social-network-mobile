@@ -10,28 +10,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const Profile: React.FC = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
-    const [userData, setUserData] = useState()
+    const [userData, setUserData] = useState(useSelector(loginSelectors.getUser()))
 
     const confirmLogOut = () => {
         Alert.alert(
-            "Attention",
-            "Are you sure you want to log out of your account?",
+            "Внимание",
+            "Вы действительно хотите выйти из профиля?",
             [
                 {
-                    text: "Yes",
+                    text: "Да",
                     onPress: () => handleLogOut()
                 },
                 {
-                    text: "No"
+                    text: "Нет"
                 }
             ]
         )
     }
-    console.log(useSelector(loginSelectors.getUser()));
-
-    useEffect(() => {
-    }, [])
-
 
     const handleLogOut = () => {
         AsyncStorage.removeItem("@token").then(() => {
@@ -41,10 +36,10 @@ export const Profile: React.FC = () => {
 
     return (
         <>
-            <Header title={'Profile'} isGoBack={false}/>
+            <Header title={'Профиль'} isGoBack={false}/>
             <Text>Profile</Text>
             <CustomButton
-                title={'Log out'}
+                title={'Выйти из профиля'}
                 onPress={confirmLogOut}
             />
         </>

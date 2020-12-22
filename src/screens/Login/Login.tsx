@@ -9,15 +9,15 @@ import {APIStatus} from '../../types/interfaces'
 import {LoginFormParams} from "./LoginInterfaces";
 
 export const Login: React.FC = () => {
-    const {status, auth, message} = useLogin()
+    const {status, auth} = useLogin()
 
     const handleSubmit = ({...props}: LoginFormParams) => {
         if (props.email.trim() && props.password.trim()) {
             auth(props)
         } else {
             Alert.alert(
-                "Attention",
-                "Fill in all the fields"
+                "Внимание",
+                "Все поля должны быть заполнены"
             )
         }
     }
@@ -25,18 +25,18 @@ export const Login: React.FC = () => {
     useEffect(() => {
         if (status === APIStatus.Failure) {
             Alert.alert(
-                "Error",
-                message,
+                "Ошибка",
+                "Пользователя с такими данными нет",
             )
         }
     }, [status])
 
     return (
         <>
-            <Header title={'Login'} isGoBack={false}/>
+            <Header title={'Вход в профиль'} isGoBack={false}/>
             <ScrollView>
                 <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
-                    <Card title={'Login'}>
+                    <Card title={'Введите данные'}>
                         {{
                             body: <LoginForm handleSubmit={handleSubmit} loading={status === APIStatus.Loading}/>
                         }}

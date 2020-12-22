@@ -5,7 +5,7 @@ import {Header} from "../../components/ui/Header/Header";
 export const Home: React.FC = () => {
     return (
         <>
-            <Header title={'Home'} isGoBack={false}/>
+            <Header title={'Главная'} isGoBack={false}/>
             <Text>
                 Home screen
             </Text>

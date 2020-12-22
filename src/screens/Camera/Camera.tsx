@@ -5,7 +5,7 @@ import {Text} from 'react-native'
 export const Camera:React.FC = () => {
     return (
         <>
-            <Header title={'Camera'} isGoBack={false}/>
+            <Header title={'Камера'} isGoBack={false}/>
             <Text>Camera</Text>
         </>
     );

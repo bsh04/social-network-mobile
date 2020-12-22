@@ -5,7 +5,7 @@ import {Text} from 'react-native'
 export const News: React.FC = () => {
     return (
         <>
-            <Header title={'News'} isGoBack={false}/>
+            <Header title={'Новости'} isGoBack={false}/>
             <Text>News</Text>
         </>
     );

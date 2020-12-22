@@ -33,7 +33,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
 
     const validator = () => {
         if (password !== confirmPassword) {
-            Alert.alert("Error", "Passwords do not match")
+            Alert.alert("Ошибка", "Пароли не совпадают")
             return
         }
         handleSubmit({firstName, secondName, email, password})
@@ -41,12 +41,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
 
     return (
         <>
-            <CustomInput label={'First name'} value={firstName}
+            <CustomInput label={'Имя'} value={firstName}
                          firstInput={true}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setFirstName(e.nativeEvent.text)}
                          onSubmitEditing={() => secondNameRef.current?.focus()}
             />
-            <CustomInput label={'Second name'} value={secondName}
+            <CustomInput label={'Фамилия'} value={secondName}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setSecondName(e.nativeEvent.text)}
                          ref={secondNameRef}
                          onSubmitEditing={() => emailRef.current?.focus()}
@@ -56,7 +56,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
                          ref={emailRef}
                          onSubmitEditing={() => passwordRef.current?.focus()}
             />
-            <CustomInput label={'Password'} value={password}
+            <CustomInput label={'Пароль'} value={password}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setPassword(e.nativeEvent.text)}
                          secureTextEntry={!openPasswords[0]}
                          rightIcon={<Icon name={openPasswords[0] ? "eye-with-line" : "eye"}
@@ -66,7 +66,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
                          ref={passwordRef}
                          onSubmitEditing={() => confPasswordRef.current?.focus()}
             />
-            <CustomInput label={'Confirm password'} value={confirmPassword}
+            <CustomInput label={'Повторите пароль'} value={confirmPassword}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setConfirmPassword(e.nativeEvent.text)}
                          secureTextEntry={!openPasswords[1]}
                          rightIcon={<Icon name={openPasswords[1] ? "eye-with-line" : "eye"}
@@ -76,15 +76,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({handleSubmit, loading
                          ref={confPasswordRef}
             />
             <CustomButton
-                title={'Registration'}
+                title={'Зарегистрироваться'}
                 buttonType={"success"}
                 onPress={() => validator()}
                 loading={loading}
                 containerStyle={{width: device.width * .5}}
             />
-            <Text style={styles.text}>You have account?</Text>
+            <Text style={styles.text}>У вас есть аккаунт?</Text>
             <CustomButton
-                title={'Login'}
+                title={'Войти'}
                 buttonType={"primary"}
                 onPress={() => navigation.navigate('Login')}
                 containerStyle={{width: device.width * .5}}

@@ -15,29 +15,29 @@ export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({handleSubmit, l
 
     return (
         <>
-            <CustomInput label={'Login'} value={login}
+            <CustomInput label={'E-mail'} value={login}
                          firstInput={true}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setLogin(e.nativeEvent.text)}
-                         additional={'To reset your password, we will send a one-time code to your mail'}
+                         additional={'Для сброса пароля мы отправим на Вашу почту одноразовый код'}
 
             />
             <CustomButton
-                title={'Get code'}
+                title={'Получить код'}
                 buttonType={"success"}
                 onPress={() => handleSubmit(login)}
                 loading={loading}
                 containerStyle={{width: device.width * .5, marginTop: 10}}
             />
-            <Text style={styles.text}>Do you know your password?</Text>
+            <Text style={styles.text}>Вы знаете свой пароль?</Text>
             <CustomButton
-                title={'Reset password'}
+                title={'Войти'}
                 buttonType={"info"}
-                onPress={() => navigation.navigate('ResetPassword')}
+                onPress={() => navigation.navigate('Login')}
                 containerStyle={{width: device.width * .5}}
             />
-            <Text style={[styles.text, {paddingTop: 30}]}>Do you want to create a new account?</Text>
+            <Text style={[styles.text, {paddingTop: 30}]}>У вас нет аккаунта?</Text>
             <CustomButton
-                title={'Registration'}
+                title={'Зарегистрироваться'}
                 buttonType={"primary"}
                 onPress={() => navigation.navigate('Register')}
                 containerStyle={{width: device.width * .5}}

@@ -30,7 +30,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setEmail(e.nativeEvent.text)}
                          onSubmitEditing={() => passwordRef.current?.focus()}
             />
-            <CustomInput label={'Password'} value={password}
+            <CustomInput label={'Пароль'} value={password}
                          onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setPassword(e.nativeEvent.text)}
                          secureTextEntry={!openPassword}
                          rightIcon={<Icon name={openPassword ? "eye-with-line" : "eye"}
@@ -41,22 +41,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
 
             />
             <CustomButton
-                title={'Sing in'}
+                title={'Войти'}
                 buttonType={"success"}
                 onPress={() => handleSubmit({email, password})}
                 loading={loading}
                 containerStyle={{width: device.width * .5}}
             />
-            <Text style={styles.text}>You forgot your password?</Text>
+            <Text style={styles.text}>Вы забыли свой пароль?</Text>
             <CustomButton
-                title={'Reset password'}
+                title={'Сбросить пароль'}
                 buttonType={"info"}
                 onPress={() => navigation.navigate('ResetPassword')}
                 containerStyle={{width: device.width * .5}}
             />
-            <Text style={[styles.text, {paddingTop: 30}]}>You haven't account?</Text>
+            <Text style={[styles.text, {paddingTop: 30}]}>У вас нет аккаунта?</Text>
             <CustomButton
-                title={'Registration'}
+                title={'Регистрация'}
                 buttonType={"primary"}
                 onPress={() => navigation.navigate('Register')}
                 containerStyle={{width: device.width * .5}}

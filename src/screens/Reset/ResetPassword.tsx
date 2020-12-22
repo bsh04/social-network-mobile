@@ -14,10 +14,10 @@ export const ResetPassword: React.FC = () => {
 
     return (
         <>
-            <Header title={'Reset password'}/>
+            <Header title={'Сброс пароля'}/>
             <ScrollView>
                 <MainLayout propsStyles={{alignItems: 'center', justifyContent: 'center'}} contentCenter={true}>
-                    <Card title={'Reset password'}>
+                    <Card title={'Введите E-mail'}>
                         {{
                             body: <ResetPasswordForm handleSubmit={handleSubmit}/>
                         }}
