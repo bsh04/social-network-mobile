@@ -13,7 +13,7 @@ export const useLogin = () => {
     const status = useSelector(loginSelectors.getStatus())
     const [message, setMessage] = useState<string | undefined>(undefined)
 
-    const auth = useCallback((payload: UserValues) => {
+    const auth = useCallback((payload) => {
         dispatch(startAuth())
             firebase
                 .auth()
@@ -25,7 +25,6 @@ export const useLogin = () => {
                         phoneNumber: res.user?.phoneNumber,
                         displayName: res.user?.displayName,
                         token: res.user?.uid,
-                        password: res.user?.providerId
                     } as UserValues
                     if (res.user?.uid) {
                         AsyncStorage.setItem("@token", res.user.uid).then(() => dispatch(successAuth(userData)))

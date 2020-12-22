@@ -9,8 +9,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const useRegister = () => {
     const dispatch = useDispatch()
 
-    const {failAuth, successAuth} = loginSlice.actions
-
     const [status, setStatus] = useState<APIStatus>(APIStatus.Initial)
     const [message, setMessage] = useState<string | undefined>(undefined)
 
@@ -21,20 +19,25 @@ export const useRegister = () => {
             .createUserWithEmailAndPassword(payload.email, payload.password)
             .then(res => {
                 res.user?.updateProfile({
-                    displayName: payload.firstName + " " + payload.secondName
+                    displayName: payload.firstName + " " + payload.secondName,
                 }).then(() => {
-                    if (res.user?.uid) {
-                        const userData = {
-                            email: res.user?.email,
-                            displayName: res.user?.displayName,
-                            token: res.user?.uid,
-                            password: res.user?.providerId
-                        } as UserValues
-                        AsyncStorage.setItem("@token", res.user.uid).then(() => dispatch(successAuth(userData))).then(() => {
-                            setStatus(APIStatus.Success)
-                        })
-                    }
-                }).catch(() => {})
+                    res.user?.updatePassword(payload.password).then(() => {
+                        if (res.user?.uid) {
+                            const userData = {
+                                email: res.user?.email,
+                                photoURL: res.user?.photoURL,
+                                phoneNumber: res.user?.phoneNumber,
+                                displayName: res.user?.displayName,
+                                token: res.user?.uid,
+                            } as UserValues
+                            AsyncStorage.setItem("@token", res.user.uid).then(() => dispatch(loginSlice.actions.successAuth(userData))).then(() => {
+                                setStatus(APIStatus.Success)
+                            })
+                        }
+                    }).catch(() => {
+                    })
+                }).catch(() => {
+                })
             })
             .catch(e => {
                 setMessage(e.message)

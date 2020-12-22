@@ -7,7 +7,6 @@ export enum APIStatus {
 
 export interface UserValues {
     email: string
-    password: string
     token?: string
     displayName?:string
     photoURL?:string

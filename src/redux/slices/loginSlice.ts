@@ -10,7 +10,6 @@ const initialState = {
     status: APIStatus.Initial,
     data: {
         email: "",
-        password: "",
         token: undefined,
         displayName: undefined,
         phoneNumber: undefined,
