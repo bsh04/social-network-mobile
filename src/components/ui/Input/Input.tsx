@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {Input, InputProps} from "react-native-elements"
 import {StyleSheet, View, Animated, Text} from 'react-native'
 import {colors} from '../../stylesheet'
@@ -37,6 +37,16 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
             value: [-20, 14, 1]
         })
     }
+
+    useEffect(() => {
+        if (value) {
+            AnimatedHandler({
+                duration: 0,
+                params: [labelPositionAnim, labelSizeAnim, labelColorAnim],
+                value: [-20, 14, 0]
+            })
+        }
+    }, [])
 
     const blurHandler = () => {
         if (!value) {
