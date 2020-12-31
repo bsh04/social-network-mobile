@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text} from "react-native";
-import {device, colors} from "../stylesheet";
+import {device, colors} from "../../stylesheet";
 
 
 interface CardProps {

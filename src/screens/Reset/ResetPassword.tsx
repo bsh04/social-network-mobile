@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, Text} from "react-native";
 import {Header} from "../../components/ui/Header/Header";
 import {LoginLayout} from "../../components/layout/LoginLayout";
-import {Card} from "../../components/ui/Card";
+import {Card} from "../../components/ui/Card/Card";
 import {APIStatus} from "../../types/interfaces";
 import {ResetPasswordForm} from "./ResetPasswordForm";
 

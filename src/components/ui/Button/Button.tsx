@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet, View, StyleProp, ViewStyle} from 'react-native'
 import {Button, ButtonProps} from 'react-native-elements'
 import {colors, device} from "../../stylesheet";
 
 interface CustomButtonProps {
-    buttonType?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'
+    buttonType?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info',
+    mainStyles?: StyleProp<ViewStyle>
 }
 
 export const CustomButton: React.FC<ButtonProps & CustomButtonProps> = ({
@@ -15,14 +16,17 @@ export const CustomButton: React.FC<ButtonProps & CustomButtonProps> = ({
                                                                             buttonType,
                                                                             loading,
                                                                             containerStyle,
-                                                                            buttonStyle
+                                                                            buttonStyle,
+                                                                            icon,
+                                                                            mainStyles
                                                                         }) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, mainStyles]}>
             <Button
                 type={"solid"}
                 title={title}
                 onPress={onPress}
+                icon={icon}
                 iconRight={iconRight}
                 loading={loading}
                 containerStyle={[styles.containerStyle, containerStyle]}

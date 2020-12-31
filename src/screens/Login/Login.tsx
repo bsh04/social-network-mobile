@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
-import {Header} from "../../components/ui/Header/Header";
-import {LoginLayout} from "../../components/layout/LoginLayout";
-import {Card} from "../../components/ui/Card";
+import {Header, Card, LoginLayout} from "../../components";
 import {LoginForm} from "./LoginForm";
 import {Alert, ScrollView} from "react-native";
 import {useLogin} from '../../hooks'

@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 import {Alert, ScrollView} from "react-native";
-import {Header} from "../../components/ui/Header/Header";
-import {LoginLayout} from "../../components/layout/LoginLayout";
-import {Card} from "../../components/ui/Card";
+import {Header, LoginLayout, Card} from "../../components";
 import {RegisterForm} from './RegisterForm'
 import {APIStatus} from "../../types/interfaces";
 import {RegisterFields} from "./RegisterInterfaces";

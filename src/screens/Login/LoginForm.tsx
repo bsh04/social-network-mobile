@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useNavigation} from "@react-navigation/native"
-import {CustomInput} from "../../components/ui/Input/Input";
+import {CustomInput, CustomButton} from "../../components";
 import {
     NativeSyntheticEvent,
     TextInputChangeEventData,
@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import {Icon} from 'react-native-elements';
 import {LoginFormProps} from './LoginInterfaces'
-import {CustomButton} from "../../components/ui/Button/Button";
 import {colors, device} from "../../components/stylesheet";
 
 export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => {

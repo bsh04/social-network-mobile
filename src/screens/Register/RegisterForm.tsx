@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {CustomInput} from "../../components/ui/Input/Input";
+import {CustomInput, CustomButton} from "../../components";
 import {
     Alert,
     NativeSyntheticEvent,
@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import {Icon} from "react-native-elements";
 import {colors, device} from "../../components/stylesheet";
-import {CustomButton} from "../../components/ui/Button/Button";
 import {useNavigation} from "@react-navigation/native";
 import {RegisterFormProps} from './RegisterInterfaces'
 

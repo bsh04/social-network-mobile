@@ -1,0 +1,14 @@
+{
+  "TSU": {
+    "rating": "9",
+    "city": "Tomsk"
+  },
+  "MSU": {
+    "rating": "10",
+    "city": "Moscow"
+  },
+  "HSE": {
+    "rating": "8",
+    "city": "Moscow"
+  }
+}
