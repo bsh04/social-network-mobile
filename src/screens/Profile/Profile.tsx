@@ -6,7 +6,6 @@ import {CustomButton} from "../../components/ui/Button/Button"
 import {useNavigation} from "@react-navigation/native"
 import {loginSlice, loginSelectors} from "../../redux/slices/loginSlice"
 import {useDispatch, useSelector} from "react-redux"
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {MainLayout} from "../../components/layout/MainLayout";
 import {EmptyUserAvatar} from "../../components/ui/EmptyUserAvatar/EmptyUserAvatar"
 import firebase from "firebase";
@@ -32,11 +31,20 @@ export const Profile: React.FC = () => {
         )
     }
 
+    useEffect(() => {
+        // firebase.firestore().collection("/universities").doc("xF57hYLByZ69xOPK3Qb4").get().then(res => {
+        //     console.log(res.data())
+        // })
+        // firebase.storage().ref("universities.json").then((res) => {
+        //     console.log(res)
+        // });
+
+    }, [])
+
+
     const handleLogOut = () => {
-        AsyncStorage.removeItem("@token").then(() => {
-            firebase.auth().signOut().then(() => {
-                dispatch(loginSlice.actions.reset())
-            })
+        firebase.auth().signOut().then(() => {
+            dispatch(loginSlice.actions.reset())
         })
     }
 

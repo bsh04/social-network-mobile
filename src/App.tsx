@@ -17,12 +17,9 @@ function App() {
         firebase.initializeApp(firebaseConfig);
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
+                const {email, phoneNumber, photoURL, displayName, uid} = user
                 const userData = {
-                    email: user?.email,
-                    photoURL: user?.photoURL,
-                    phoneNumber: user?.phoneNumber,
-                    displayName: user?.displayName,
-                    token: user?.uid,
+                    email, photoURL, phoneNumber, displayName, token: uid,
                 } as UserValues
                 dispatch(loginSlice.actions.setUser(userData))
             }
