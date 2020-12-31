@@ -4,7 +4,7 @@ import {Profile, Settings, UserData, ChangeUserData} from '../../screens'
 
 const ProfileNavigator = createStackNavigator()
 
-export const ProfileStack: React.FC = (props) => {
+const ProfileStack: React.FC = (props) => {
     return (
         <ProfileNavigator.Navigator headerMode={"none"}>
             <ProfileNavigator.Screen name={'Profile'} component={Profile}/>
@@ -14,3 +14,5 @@ export const ProfileStack: React.FC = (props) => {
         </ProfileNavigator.Navigator>
     );
 }
+
+export default ProfileStack

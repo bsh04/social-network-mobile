@@ -4,10 +4,12 @@ import {Camera} from '../../screens'
 
 const CameraNavigator = createStackNavigator()
 
-export const CameraStack: React.FC = (props) => {
+const CameraStack: React.FC = (props) => {
     return (
         <CameraNavigator.Navigator headerMode={"none"}>
             <CameraNavigator.Screen name={'Camera'} component={Camera}/>
         </CameraNavigator.Navigator>
     );
 }
+
+export default CameraStack
