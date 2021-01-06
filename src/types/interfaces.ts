@@ -14,7 +14,7 @@ export interface UserValues {
     phoneNumber?:string
 }
 
-export interface Friends {
+export interface Persons {
     id: number
     name: string
     avatar?: number

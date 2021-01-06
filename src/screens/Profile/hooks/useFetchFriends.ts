@@ -2,7 +2,7 @@ import {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {friendsSlice, friendsSelectors} from "../../../redux/slices/friendsSlice"
 import {userSelectors} from "../../../redux/slices/userSlice"
-import {Friends} from "../../../types/interfaces"
+import {Persons} from "../../../types/interfaces"
 
 export const useFetchFriends = () => {
     const dispatch = useDispatch()
@@ -65,4 +65,4 @@ const mockFriends = [
         avatar: require("../../../mockImages/avatars/4.png"),
         name: "Никита Уваров"
     },
-] as Array<Friends>
+] as Array<Persons>

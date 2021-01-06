@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, ViewStyle} from "react-native";
 import {colors} from "../../stylesheet";
 import {Icon} from "react-native-elements";
 
-export const EmptyUserAvatar:React.FC = () => {
+export const EmptyUserAvatar:React.FC<{style?: ViewStyle}> = ({style}) => {
     return (
-        <View style={styles.container}>
+        <View style={[style, styles.container]}>
             <Icon name={"person"} type={"material"} color={"#555"}/>
         </View>
     );

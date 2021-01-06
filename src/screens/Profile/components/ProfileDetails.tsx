@@ -1,29 +1,40 @@
 import React from 'react';
 import {View, Text, StyleSheet} from "react-native";
 import {useFetchFriends} from "../hooks/useFetchFriends"
+import {useFetchClassmates} from "../hooks/useFetchClassmates"
 import {friendsSelectors} from "../../../redux/slices/friendsSlice"
+import {classmatesSelectors} from "../../../redux/slices/classmatesSlice"
 import {useSelector} from "react-redux";
-import {colors, FlexBox} from "../../../components";
+import {colors, device, EmptyUserAvatar, FlexBox} from "../../../components";
 import {Avatar, Icon, Image} from "react-native-elements";
-import {Friends} from "../../../types/interfaces";
+import {Persons} from "../../../types/interfaces";
 import {useNavigation} from "@react-navigation/native"
-const avatarsURL = "../../../mockImages/avatars/"
 
-const FriendsRender: React.FC<{data: Array<Friends>}> = ({data}) => {
+interface PersonsRenderProps {
+    type: "friends" | "classmates" | "teacher"
+    data: Array<Persons>
+}
+
+const PersonsRender: React.FC<PersonsRenderProps> = ({data, type}) => {
     const navigation = useNavigation()
-    let friendsList = [...data]
-    friendsList = friendsList.length > 5 ? [...friendsList.splice(0, 6)] : friendsList
+    let items = [...data]
+    items = items.length > 5 ? [...items.splice(0, 6)] : items
     return (
-        <FlexBox flex={{directionRow: true, alignItems: "center"}} styles={{paddingLeft: 10, height: 55}} onPress={() => navigation.navigate("UsersList")}>
-            {friendsList.map((friend, index) => {
+        <FlexBox flex={{directionRow: true, alignItems: "center"}} styles={{paddingLeft: 10, height: 55}} onPress={() => navigation.navigate("UsersList", {type})}>
+            {items.map((item, index) => {
                 if (index === 5) {
-                    return <View style={[styles.lastFriend, styles.avatarContainer]}>
-                        <Text style={styles.countFriends}>+ {data.length - friendsList.length}</Text>
+                    return <View key={index} style={[styles.lastFriend, styles.avatarContainer]}>
+                        <Text style={styles.countFriends}>+ {data.length - items.length}</Text>
                     </View>
                 }
                 return (
                     <View key={index} style={styles.wrapper}>
-                        <Image source={friend.avatar} containerStyle={styles.avatarContainer}/>
+                        {
+                            item.avatar ?
+                                <Image source={item.avatar!} containerStyle={styles.avatarContainer}/>
+                                :
+                                <EmptyUserAvatar style={styles.avatarContainer}/>
+                        }
                     </View>
                 )
                 }
@@ -34,21 +45,34 @@ const FriendsRender: React.FC<{data: Array<Friends>}> = ({data}) => {
 
 export const ProfileDetails: React.FC = () => {
     useFetchFriends()
+    useFetchClassmates()
     const navigation = useNavigation()
 
     const friends = useSelector(friendsSelectors.getFriends())
+    const classmates = useSelector(classmatesSelectors.getClassmates())
 
     return (
         <View style={styles.container}>
             <View>
+                <View style={styles.horLine}/>
                 <Text style={styles.friendsTitle}>Друзья</Text>
                 <FlexBox flex={{justifyContent: "space-between", alignItems: "center", directionRow: true}}>
                     <FlexBox flex={{directionRow: true, alignItems: "center"}}>
                         <Icon name={"group"} type={"font-awesome"} size={40} color={colors.Allports} />
-                        <FriendsRender data={friends}/>
+                        <PersonsRender data={friends} type={"friends"}/>
                     </FlexBox>
-                    <Icon name={"arrow-right"} type={"simple-line-icon"} onPress={() => navigation.navigate("UsersList")}/>
+                    <Icon name={"arrow-right"} type={"simple-line-icon"} onPress={() => navigation.navigate("UsersList", {type: "friends"})}/>
                 </FlexBox>
+                <View style={styles.horLine}/>
+                <Text style={[styles.friendsTitle]}>Одногруппники</Text>
+                <FlexBox flex={{justifyContent: "space-between", alignItems: "center", directionRow: true}}>
+                    <FlexBox flex={{directionRow: true, alignItems: "center"}}>
+                        <Icon name={"users"} type={"entypo"} size={40} color={colors.Allports} />
+                        <PersonsRender data={classmates} type={"classmates"}/>
+                    </FlexBox>
+                    <Icon name={"arrow-right"} type={"simple-line-icon"} onPress={() => navigation.navigate("UsersList", {type: "classmates"})}/>
+                </FlexBox>
+                <View style={styles.horLine}/>
             </View>
         </View>
     );
@@ -84,5 +108,11 @@ const styles = StyleSheet.create({
         color: colors.White,
         position: "relative",
         left: -2
+    },
+    horLine: {
+        width: device.width,
+        height: 1,
+        backgroundColor: colors.Gray,
+        marginVertical: 10
     }
 })

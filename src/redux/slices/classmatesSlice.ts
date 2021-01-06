@@ -3,23 +3,23 @@ import {APIStatus, Persons} from "../../types/interfaces";
 
 interface SliceState {
     status: APIStatus
-    friends: Array<Persons>
+    classmates: Array<Persons>
 }
 
 const initialState = {
     status: APIStatus.Initial,
-    friends: []
+    classmates: []
 } as SliceState
 
-export const friendsSlice = createSlice({
-    name: "friendsSlice",
+export const classmatesSlice = createSlice({
+    name: "classmatesSlice",
     initialState,
     reducers: {
         startFetch (state: SliceState) {
             state.status = APIStatus.Loading
         },
         successFetch (state: SliceState, action: PayloadAction<Array<Persons>>) {
-            state.friends = action.payload
+            state.classmates = action.payload
             state.status = APIStatus.Success
         },
         failFetch (state: SliceState) {
@@ -29,10 +29,10 @@ export const friendsSlice = createSlice({
 })
 
 interface Store {
-    friends: SliceState
+    classmates: SliceState
 }
 
-export const friendsSelectors = {
-    getFriends: () => (state: Store) => state.friends.friends,
-    getStatus: () => (state: Store) => state.friends.status
+export const classmatesSelectors = {
+    getClassmates: () => (state: Store) => state.classmates.classmates,
+    getStatus: () => (state: Store) => state.classmates.status
 }
