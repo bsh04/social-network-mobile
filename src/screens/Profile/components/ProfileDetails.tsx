@@ -1,9 +1,11 @@
 import React from 'react';
 import {View, Text, StyleSheet} from "react-native";
 import {useFetchFriends} from "../hooks/useFetchFriends"
+import {useFetchTeachers} from "../hooks/useFetchTeachers"
 import {useFetchClassmates} from "../hooks/useFetchClassmates"
 import {friendsSelectors} from "../../../redux/slices/friendsSlice"
 import {classmatesSelectors} from "../../../redux/slices/classmatesSlice"
+import {teachersSelectors} from "../../../redux/slices/teachersSlice"
 import {useSelector} from "react-redux";
 import {colors, device, EmptyUserAvatar, FlexBox} from "../../../components";
 import {Avatar, Icon, Image} from "react-native-elements";
@@ -11,7 +13,7 @@ import {Persons} from "../../../types/interfaces";
 import {useNavigation} from "@react-navigation/native"
 
 interface PersonsRenderProps {
-    type: "friends" | "classmates" | "teacher"
+    type: "friends" | "classmates" | "teachers"
     data: Array<Persons>
 }
 
@@ -46,10 +48,12 @@ const PersonsRender: React.FC<PersonsRenderProps> = ({data, type}) => {
 export const ProfileDetails: React.FC = () => {
     useFetchFriends()
     useFetchClassmates()
+    useFetchTeachers()
     const navigation = useNavigation()
 
     const friends = useSelector(friendsSelectors.getFriends())
     const classmates = useSelector(classmatesSelectors.getClassmates())
+    const teachers = useSelector(teachersSelectors.getTeachers())
 
     return (
         <View style={styles.container}>
@@ -71,6 +75,15 @@ export const ProfileDetails: React.FC = () => {
                         <PersonsRender data={classmates} type={"classmates"}/>
                     </FlexBox>
                     <Icon name={"arrow-right"} type={"simple-line-icon"} onPress={() => navigation.navigate("UsersList", {type: "classmates"})}/>
+                </FlexBox>
+                <View style={styles.horLine}/>
+                <Text style={[styles.friendsTitle]}>Преподаватели</Text>
+                <FlexBox flex={{justifyContent: "space-between", alignItems: "center", directionRow: true}}>
+                    <FlexBox flex={{directionRow: true, alignItems: "center"}}>
+                        <Icon name={"teach"} type={"material-community"} size={40} color={colors.Allports} />
+                        <PersonsRender data={teachers} type={"teachers"}/>
+                    </FlexBox>
+                    <Icon name={"arrow-right"} type={"simple-line-icon"} onPress={() => navigation.navigate("UsersList", {type: "teachers"})}/>
                 </FlexBox>
                 <View style={styles.horLine}/>
             </View>
