@@ -9,16 +9,17 @@ interface SliceState {
 const initialState = {
     status: APIStatus.Initial,
     data: {
-        email: "",
+        id: 1,
         token: undefined,
+        email: "",
         displayName: undefined,
         phoneNumber: undefined,
         photoURL: undefined,
     }
 } as SliceState
 
-export const loginSlice = createSlice({
-    name: 'loginSlice',
+export const userSlice = createSlice({
+    name: 'userSlice',
     initialState,
     reducers: {
         startAuth(state: SliceState) {
@@ -46,10 +47,11 @@ export const loginSlice = createSlice({
 })
 
 interface Store {
-    login: SliceState
+    user: SliceState
 }
 
-export const loginSelectors = {
-    getStatus: () => (state: Store) => state.login.status,
-    getUser: () => (state: Store) => state.login.data
+export const userSelectors = {
+    getStatus: () => (state: Store) => state.user.status,
+    getUser: () => (state: Store) => state.user.data,
+    getUserId: () => (state: Store) => state.user.data.id
 }

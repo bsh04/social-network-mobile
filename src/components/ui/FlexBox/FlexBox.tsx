@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleProp, ViewStyle, View} from "react-native"
+import {StyleProp, ViewStyle, TouchableOpacityProps, TouchableOpacity} from "react-native"
 
 interface FlexBoxProps {
     flex?: {
@@ -8,19 +8,29 @@ interface FlexBoxProps {
         justifyContent?: "center" | "space-between" | "left" | "right" | "space-around"
     }
     styles?: StyleProp<ViewStyle>
+
 }
 
-export const FlexBox: React.FC<FlexBoxProps> = ({children, flex, styles}) => {
+export const FlexBox: React.FC<FlexBoxProps & TouchableOpacityProps> = ({
+    children,
+    flex,
+    styles,
+    onPress,
+    activeOpacity
+}) => {
     return (
-        <View style={[
+        <TouchableOpacity style={[
             {
                 flexDirection: flex?.directionRow ? flex?.directionRow ? "row" : "column" : undefined,
                 alignItems: flex?.alignItems ? flex?.alignItems === "right" ? "flex-end" : flex?.alignItems === "left" ? "flex-start" : flex?.alignItems : undefined,
                 justifyContent: flex?.justifyContent ? flex?.justifyContent === "right" ? "flex-end" : flex?.justifyContent === "left" ? "flex-start" : flex?.justifyContent : undefined
             },
             styles
-        ]}>
+        ]}
+            onPress={onPress}
+            activeOpacity={activeOpacity || 1}
+        >
             {children}
-        </View>
+        </TouchableOpacity>
     );
 };

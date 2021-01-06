@@ -1,6 +1,8 @@
 import {combineReducers} from "redux"
-import {loginSlice} from '../slices/loginSlice'
+import {userSlice} from '../slices/userSlice'
+import {friendsSlice} from '../slices/friendsSlice'
 
 export const rootReducer = combineReducers({
-    login: loginSlice.reducer
+    user: userSlice.reducer,
+    friends: friendsSlice.reducer
 })

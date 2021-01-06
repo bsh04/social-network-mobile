@@ -6,7 +6,7 @@ import {Provider, useDispatch} from 'react-redux'
 import {store} from './redux/store/store'
 import firebase from "firebase";
 import {firebaseConfig} from "./config"
-import {loginSlice} from "./redux/slices/loginSlice"
+import {userSlice} from "./redux/slices/userSlice"
 import {UserValues} from "./types/interfaces";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
                 const userData = {
                     email, photoURL, phoneNumber, displayName, token: uid,
                 } as UserValues
-                dispatch(loginSlice.actions.setUser(userData))
+                dispatch(userSlice.actions.setUser(userData))
             }
             setReady(true)
         })

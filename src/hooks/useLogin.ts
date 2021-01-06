@@ -1,4 +1,4 @@
-import {loginSlice, loginSelectors} from '../redux/slices/loginSlice'
+import {userSlice, userSelectors} from '../redux/slices/userSlice'
 import {useDispatch, useSelector} from 'react-redux'
 import {useCallback, useState} from "react";
 import {UserValues} from '../types/interfaces'
@@ -7,9 +7,9 @@ import firebase from "firebase";
 export const useLogin = () => {
     const dispatch = useDispatch()
 
-    const {failAuth, startAuth, successAuth} = loginSlice.actions
+    const {failAuth, startAuth, successAuth} = userSlice.actions
 
-    const status = useSelector(loginSelectors.getStatus())
+    const status = useSelector(userSelectors.getStatus())
 
     const auth = useCallback((payload) => {
         dispatch(startAuth())

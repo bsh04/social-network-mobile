@@ -9,7 +9,7 @@ const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
     return (
         <Drawer.Navigator>
-            <Drawer.Screen name="Home" component={BottomTabs} />
+            <Drawer.Screen name="Главная" component={BottomTabs} />
         </Drawer.Navigator>
     );
 }

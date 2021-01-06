@@ -1,4 +1,4 @@
-import {loginSlice} from '../redux/slices/loginSlice'
+import {userSlice} from '../redux/slices/userSlice'
 import {useDispatch} from 'react-redux'
 import {useCallback, useState} from "react";
 import {APIStatus, UserValues} from '../types/interfaces'
@@ -11,22 +11,23 @@ export const useRegister = () => {
     const [status, setStatus] = useState<APIStatus>(APIStatus.Initial)
 
     const register = useCallback((payload: RegisterFields) => {
+        const {password, secondName, firstName, email} = payload
         setStatus(APIStatus.Loading)
         firebase
             .auth()
-            .createUserWithEmailAndPassword(payload.email, payload.password)
+            .createUserWithEmailAndPassword(email, password)
             .then(res => {
                 const user = res.user
                 user?.updateProfile({
-                    displayName: payload.firstName + " " + payload.secondName,
+                    displayName: firstName + " " + secondName,
                 }).then(() => {
-                    user?.updatePassword(payload.password).then(() => {
+                    user?.updatePassword(password).then(() => {
                         if (user) {
                             const {email, phoneNumber, photoURL, displayName, uid} = user
                             const userData = {
                                 email, photoURL, phoneNumber, displayName, token: uid
                             } as UserValues
-                            dispatch(loginSlice.actions.successAuth(userData))
+                            dispatch(userSlice.actions.successAuth(userData))
                             setStatus(APIStatus.Success)
                         }
                     }).catch(() => {

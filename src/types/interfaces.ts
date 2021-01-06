@@ -6,9 +6,16 @@ export enum APIStatus {
 }
 
 export interface UserValues {
+    id?: number
     email: string
     token?: string
     displayName?:string
     photoURL?:string
     phoneNumber?:string
+}
+
+export interface Friends {
+    id: number
+    name: string
+    avatar?: number
 }

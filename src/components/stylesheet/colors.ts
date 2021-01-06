@@ -13,6 +13,10 @@ export const colors = {
     Darkslategray: '#2a4041',
     Black: '#19191a',
     Pelorous: '#17a2b8',
+    DoveGrey: '#666666',
+    LightBlack: '#444444',
+    GreyishBrown: '#303030',
+    Dark: '#222222',
 
     ButtonTypes: {
         BGColor: {
