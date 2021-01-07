@@ -85,7 +85,6 @@ export const ProfileDetails: React.FC = () => {
                     </FlexBox>
                     <Icon name={"arrow-right"} type={"simple-line-icon"} onPress={() => navigation.navigate("UsersList", {type: "teachers"})}/>
                 </FlexBox>
-                <View style={styles.horLine}/>
             </View>
         </View>
     );
@@ -93,7 +92,6 @@ export const ProfileDetails: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 20
     },
     friendsTitle: {
         fontSize: 18,

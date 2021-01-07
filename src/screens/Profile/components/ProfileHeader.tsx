@@ -25,7 +25,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({userData}) => {
     }
 
     return (
-        <View>
+        <>
             <FlexBox flex={{directionRow: true, justifyContent: "space-between", alignItems: "center"}}>
                 <FlexBox flex={{directionRow: true}}>
                     <TouchableOpacity
@@ -55,7 +55,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({userData}) => {
                     onPress={() => navigation.navigate('ChangeUserData')}
                 />
             </View>
-        </View>
+        </>
     )
 }
 

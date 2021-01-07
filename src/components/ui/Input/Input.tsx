@@ -1,24 +1,28 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Input, InputProps} from "react-native-elements"
+import {Icon, Input, InputProps} from "react-native-elements"
 import {StyleSheet, View, Animated, Text} from 'react-native'
 import {colors} from '../../stylesheet'
 import {AnimatedHandler} from './InputAnimation'
 
 interface CustomInputProps extends InputProps {
-    firstInput?: boolean,
+    firstInput?: boolean
     additional?: string
+    withClean?: boolean
+    setValue?: (value: string) => void
 }
 
 export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
-                                                                               onChange,
-                                                                               label,
-                                                                               value,
-                                                                               onSubmitEditing,
-                                                                               rightIcon,
-                                                                               secureTextEntry,
-                                                                               firstInput,
-                                                                               additional
-                                                                           }, ref:React.ForwardedRef<any>) => {
+   onChange,
+   label,
+   value,
+   onSubmitEditing,
+   rightIcon,
+   secureTextEntry,
+   firstInput,
+   additional,
+   withClean,
+   setValue
+}, ref:React.ForwardedRef<any>) => {
 
     const [labelColorAnim] = useState<Animated.AnimatedProps<any>>(new Animated.Value(0))
 
@@ -81,7 +85,20 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
                 inputContainerStyle={[styles.inputContainerStyle, {
                     borderColor: boxInterpolationColor
                 }]}
-                rightIcon={rightIcon}
+                rightIcon={
+                    rightIcon ?
+                        rightIcon :
+                        withClean && value ?
+                            <Icon
+                                name={"close"}
+                                type={"antdesign"}
+                                onPress={() => {
+                                    setValue!("")
+                                }}
+                            /> :
+                            undefined
+                }
+                rightIconContainerStyle={{position: "absolute", right: 0}}
                 onChange={onChange}
                 value={value}
                 onSubmitEditing={onSubmitEditing}

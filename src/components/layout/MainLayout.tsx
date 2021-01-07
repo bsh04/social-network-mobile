@@ -14,24 +14,27 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({children: {body, header, footer}}) => {
     return (
-        <View style={styles.container}>
-            <View>{header}</View>
-            <ScrollView style={styles.body}>
-                {body}
-            </ScrollView>
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>{header}</View>
+            <View style={styles.body}>{body}</View>
             <View style={styles.footer}>{footer}</View>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: device.width,
-        padding: 10,
-        flex: 1,
+        paddingHorizontal: 10,
+        height: device.height
+    },
+    header: {
+      paddingTop: 10,
     },
     body: {
+        paddingBottom: 10
     },
     footer: {
+        position: "relative",
+        bottom: 1
     }
 })
