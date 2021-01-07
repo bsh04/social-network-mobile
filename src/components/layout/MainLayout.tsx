@@ -24,8 +24,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({children: {body, header, 
 
 const styles = StyleSheet.create({
     container: {
+        position: "relative",
         paddingHorizontal: 10,
-        height: device.height
     },
     header: {
       paddingTop: 10,
@@ -34,7 +34,5 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     footer: {
-        position: "relative",
-        bottom: 1
     }
 })

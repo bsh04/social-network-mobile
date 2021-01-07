@@ -92,6 +92,7 @@ export const ProfileDetails: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 10
     },
     friendsTitle: {
         fontSize: 18,

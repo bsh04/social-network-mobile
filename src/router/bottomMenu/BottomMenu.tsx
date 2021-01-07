@@ -9,7 +9,7 @@ const DialogsStack = React.lazy(() => import("../stacks/DialogsStack"))
 const CameraStack = React.lazy(() => import("../stacks/CameraStack"))
 const HomeStack = React.lazy(() => import("../stacks/HomeStack"))
 const ProfileStack = React.lazy(() => import("../stacks/ProfileStack"))
-const NewsStack = React.lazy(() => import("../stacks/NewsStack"))
+const ChannelsStack = React.lazy(() => import("../stacks/ChannelsStack"))
 
 const Tab = createBottomTabNavigator();
 
@@ -28,19 +28,19 @@ export const BottomTabs: React.FC = () => {
             >
                 <Tab.Screen name="Главная" component={HomeStack} options={{
                     tabBarIcon: ({color, size}) => <Icon name={"home"} type={"entypo"} color={color} size={size}/>,
+                }}/>
+                <Tab.Screen name="Каналы" component={ChannelsStack} options={{
+                    tabBarIcon: ({color, size}) => <Icon name={"chat"} type={"entypo"} color={color} size={size}/>,
                     tabBarBadge: '1',
                     tabBarBadgeStyle: {paddingTop: 1.5},
                 }}/>
-                <Tab.Screen name="Новости" component={NewsStack} options={{
-                    tabBarIcon: ({color, size}) => <Icon name={"news"} type={"entypo"} color={color} size={size}/>
+                <Tab.Screen name="Профиль" component={ProfileStack} options={{
+                    tabBarIcon: ({color, size}) => <Icon name={"person"} type={"material"} color={color} size={size}/>
                 }}/>
                 <Tab.Screen name="Диалоги" component={DialogsStack} options={{
                     tabBarIcon: ({color, size}) => <Icon name={"message"} type={"material"} color={color} size={size}/>,
                     tabBarBadge: '9+',
                     tabBarBadgeStyle: {paddingTop: 1.5},
-                }}/>
-                <Tab.Screen name="Профиль" component={ProfileStack} options={{
-                    tabBarIcon: ({color, size}) => <Icon name={"person"} type={"material"} color={color} size={size}/>
                 }}/>
                 <Tab.Screen name="Камера" component={CameraStack} options={{
                     tabBarIcon: ({color, size}) => <Icon name={"camera"} type={"font-awesome"} color={color} size={size}/>

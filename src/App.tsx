@@ -8,6 +8,7 @@ import firebase from "firebase";
 import {firebaseConfig} from "./config"
 import {userSlice} from "./redux/slices/userSlice"
 import {UserValues} from "./types/interfaces";
+import {device} from "./components/stylesheet";
 
 function App() {
     const [ready, setReady] = useState(false)
@@ -29,7 +30,7 @@ function App() {
 
     if (ready) {
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, height: device.height}}>
                 <Router/>
             </View>
         )

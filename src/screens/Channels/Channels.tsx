@@ -3,10 +3,10 @@ import {Header} from "../../components/ui/Header/Header";
 import {Text} from 'react-native'
 import {InWorkScreen} from "../../components/ui/InWorkScreen/InWorkScreen";
 
-export const News: React.FC = () => {
+export const Channels: React.FC = () => {
     return (
         <>
-            <Header title={'Новости'} isGoBack={false}/>
+            <Header title={'Каналы'} isGoBack={false}/>
             <InWorkScreen/>
         </>
     );
