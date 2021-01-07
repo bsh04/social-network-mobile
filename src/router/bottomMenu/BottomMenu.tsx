@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {Icon} from "react-native-elements";
 import {colors} from '../../components/stylesheet'
-import {Animated} from 'react-native'
 import {Loading} from "../../components/ui/Loading/Loading";
 
 const DialogsStack = React.lazy(() => import("../stacks/DialogsStack"))
@@ -16,12 +15,10 @@ const Tab = createBottomTabNavigator();
 
 export const BottomTabs: React.FC = () => {
 
-    // const iconSize = useRef(new Animated.Value(5)).current;
-
     return (
         <React.Suspense fallback={<Loading/>}>
             <Tab.Navigator
-                lazy={false}
+                lazy
                 tabBarOptions={{
                 style: {backgroundColor: colors.BlueLagoon, paddingVertical: 5, height: 65},
                 tabStyle: {justifyContent: 'center', alignItems: "center", height: 50},
