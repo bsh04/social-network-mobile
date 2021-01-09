@@ -5,8 +5,9 @@ import {Home} from '../../screens'
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {colors} from "../../components/stylesheet";
 import {Text} from "react-native";
-import {ButtonItemProps} from "../../components/ui/RadioButton/RadioButton";
-import {ContentType, ContentTypeView} from "../../types/types";
+import {ContentType, ContentTypesI, ContentTypeView, FiltersType} from "../../types/types";
+import {useSelector} from "react-redux";
+import {homeSelectors} from "../../redux/slices/homeSlice";
 
 const HomeNavigator = createStackNavigator()
 
@@ -21,18 +22,10 @@ const HomeWrap = () => {
 }
 
 const HomeDrawer = () => {
-    const [contentTypes, setContentTypes] = useState<Array<ButtonItemProps>>([
-        {
-            checked: true,
-            title: ContentTypeView[ContentType.News],
-            type: ContentType.News
-        },
-        {
-            checked: false,
-            title: ContentTypeView[ContentType.Mention],
-            type: ContentType.Mention
-        }
-    ])
+    const initContentTypes = useSelector(homeSelectors.getContentTypes())
+    const [contentTypes, setContentTypes] = useState<Array<ContentTypesI>>(initContentTypes)
+
+    const [filters, setFilters] = useState<Array<FiltersType> | Array<number>>([])
 
     return (
         <Drawer.Navigator lazy drawerPosition={"right"} drawerType={"slide"} drawerContent={() => Filters({contentTypes: contentTypes, setContentType: setContentTypes})}>

@@ -4,6 +4,12 @@ export type ParamList = {
     };
 };
 
+export interface ContentTypesI {
+    checked: boolean
+    title: string
+    type: ContentType
+}
+
 export enum ContentType {
     News = "news",
     Mention = "mention",

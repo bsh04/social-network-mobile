@@ -1,32 +1,27 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {View, StyleSheet, Text} from "react-native";
 import {colors, FlexBox} from "../..";
-import {ContentType} from "../../../types/types";
-
-export interface ButtonItemProps {
-    type: ContentType
-    checked: boolean
-    title: string
-}
+import {ContentType, ContentTypesI} from "../../../types/types";
 
 interface RadioButtonProps {
-    items: Array<ButtonItemProps>
-    setItems: Dispatch<SetStateAction<ButtonItemProps[]>>
+    items: Array<ContentTypesI>
+    setItems: Dispatch<SetStateAction<ContentTypesI[]>>
 }
 
 interface RadioButtonItemProps {
-    item: ButtonItemProps
+    item: ContentTypesI
     setChecked: (type: ContentType) => void
+    last: boolean
 }
 
-const RadioButtonItem: React.FC<RadioButtonItemProps> = ({setChecked, item}) => {
+const RadioButtonItem: React.FC<RadioButtonItemProps> = ({setChecked, item, last}) => {
     const {title, checked, type} = item
     return (
-        <FlexBox style={styles.row} flex={{directionRow: true, alignItems: "center"}} onPress={() => setChecked(type)}>
+        <FlexBox styles={[styles.row, {paddingBottom: last ? 0 : 10}]} flex={{directionRow: true, alignItems: "center"}} onPress={() => setChecked(type)}>
             <View style={styles.radio}>
                 {checked && <View style={styles.checkedPoint}/>}
             </View>
-            <Text style={[styles.title, {color: checked ? colors.Black : colors.Gray}]}>{title}</Text>
+            <Text style={[styles.title, {color: checked ? colors.Black : colors.DoveGrey}]}>{title}</Text>
         </FlexBox>
     )
 }
@@ -41,7 +36,7 @@ export const RadioButton: React.FC<RadioButtonProps> = ({items, setItems}) => {
     return (
         <View style={styles.container}>
             {items.map((item, index) => {
-                return <RadioButtonItem setChecked={handleChangeChecked} key={index} item={item} />
+                return <RadioButtonItem setChecked={handleChangeChecked} key={index} item={item} last={index === items.length} />
             })}
         </View>
     )
@@ -55,18 +50,20 @@ const styles = StyleSheet.create({
     radio: {
         borderRadius: 50,
         borderWidth: 1,
-        borderColor: colors.Blue,
-        width: 30,
-        height: 30,
-        backgroundColor: colors.WhiteGray,
+        borderColor: colors.Gray,
+        width: 20,
+        height: 20,
+        alignItems: "center",
+        justifyContent: "center",
     },
     checkedPoint: {
         borderRadius: 50,
-        width: 15,
-        height: 15,
-        backgroundColor: colors.Green,
+        width: 13,
+        height: 13,
+        backgroundColor: colors.Pelorous,
     },
     title: {
         paddingLeft: 10,
+        fontSize: 16
     }
 })
