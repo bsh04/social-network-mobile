@@ -28,6 +28,10 @@ export const Home: React.FC = () => {
         }
     }, [isOpenMenu])
 
+    const handleOpenFilters = () => {
+
+    }
+
     return (
         <>
             <Header title={'Главная'} isGoBack={false}/>
@@ -37,7 +41,7 @@ export const Home: React.FC = () => {
                 }]}>
                     <FlexBox styles={styles.menuHeader} flex={{justifyContent: "space-between", alignItems: "center", directionRow: true}}>
                         <Text style={styles.contentType}>Новости</Text>
-                        <Icon name={"ios-options"} type={"ionicon"} color={colors.White}/>
+                        <Icon name={"ios-options"} type={"ionicon"} color={colors.White} onPress={handleOpenFilters}/>
                     </FlexBox>
                     <FlexBox style={styles.paramsContainer}>
                         <Text>вторая</Text>
@@ -45,7 +49,12 @@ export const Home: React.FC = () => {
                     </FlexBox>
                     <TouchableOpacity style={styles.toggleContainer} onPress={handleToggle}>
                         <View style={[styles.toggle]} >
-                            <Icon name={`keyboard-arrow-${isOpenMenu ? "up" : "down"}`} type={"material"} color={colors.White}/>
+                            <Icon
+                                name={`keyboard-arrow-${isOpenMenu ? "up" : "down"}`}
+                                type={"material"}
+                                color={colors.White}
+                                style={styles.toggleIcon}
+                            />
                         </View>
                     </TouchableOpacity>
                 </Animated.View>
@@ -80,6 +89,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: device.width / 2 - 20,
         zIndex: 10000
+    },
+    toggleIcon: {
+      position: "relative",
+      top: 1,
     },
     toggle: {
         position: "absolute",

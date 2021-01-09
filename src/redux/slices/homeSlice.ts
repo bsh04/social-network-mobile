@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction, Slice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {APIStatus, News} from "../../types/interfaces";
 import {ContentType, FiltersType} from "../../types/types";
 
@@ -54,4 +54,6 @@ interface Store {
 export const homeSelectors = {
     getContent: () => (state: Store) => state.home.content,
     getStatus: () => (state: Store) => state.home.fetchStatus,
+    getFilters: () => (state: Store) => state.home.filters,
+    getOffset: () => (state: Store) => state.home.offset,
 }

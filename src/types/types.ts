@@ -9,10 +9,23 @@ export enum ContentType {
     Mention = "mention",
 }
 
+export const ContentTypeView ={
+    [ContentType.News]: "Новости",
+    [ContentType.Mention]: "Упоминания"
+}
+
 export enum FiltersType {
     Friends = "friends",
     Classmates = "classmates",
     Teachers = "teachers",
-    University = "university",
+    Universities = "university",
     Liked = "liked",
+}
+
+export const FilterTypeView = {
+    [FiltersType.Friends]: "Друзья",
+    [FiltersType.Classmates]: "Одногруппники",
+    [FiltersType.Teachers]: "Преподаватели",
+    [FiltersType.Universities]: "Университеты",
+    [FiltersType.Liked]: "Понравившиеся",
 }
