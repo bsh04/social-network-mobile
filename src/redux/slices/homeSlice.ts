@@ -1,14 +1,23 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {APIStatus, News} from "../../types/interfaces";
-import {ContentType, ContentTypesI, ContentTypeView, FiltersType} from "../../types/types";
+import {ContentType, ContentTypesI, ContentTypeView, FiltersI, RoleType, RoleTypeView} from "../../types/types";
 
 interface SliceState {
     fetchStatus: APIStatus
     contentTypes: Array<ContentTypesI>
-    filters: Array<FiltersType> | Array<number>
+    filters: FiltersI
     content: Array<News>
     offset: number
 }
+
+const initFilters = {
+    people: [],
+    rolesType: [...Object.values(RoleType)].map(role => ({
+        selected: false,
+        title: RoleTypeView[role],
+        type: role
+    }))
+} as FiltersI
 
 const initContentTypes = [{
         checked: true,
@@ -19,12 +28,12 @@ const initContentTypes = [{
         checked: false,
         title: ContentTypeView[ContentType.Mention],
         type: ContentType.Mention
-    }]as Array<ContentTypesI>
+    }] as Array<ContentTypesI>
 
 const initialState = {
     fetchStatus: APIStatus.Initial,
     contentTypes: initContentTypes,
-    filters: [],
+    filters: initFilters,
     content: [],
     offset: 0
 } as SliceState
@@ -46,7 +55,7 @@ export const homeSlice = createSlice({
         setContentType(state: SliceState, action: PayloadAction<Array<ContentTypesI>>) {
           state.contentTypes = action.payload
         },
-        setFilters(state: SliceState, action: PayloadAction<Array<FiltersType> | Array<number>>) {
+        setFilters(state: SliceState, action: PayloadAction<FiltersI>) {
             state.filters = action.payload
         },
         setOffset(state: SliceState, action: PayloadAction<number>) {

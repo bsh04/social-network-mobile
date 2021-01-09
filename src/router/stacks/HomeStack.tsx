@@ -5,7 +5,7 @@ import {Home} from '../../screens'
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {colors} from "../../components/stylesheet";
 import {Text} from "react-native";
-import {ContentType, ContentTypesI, ContentTypeView, FiltersType} from "../../types/types";
+import {ContentType, ContentTypesI, ContentTypeView, FiltersI} from "../../types/types";
 import {useSelector} from "react-redux";
 import {homeSelectors} from "../../redux/slices/homeSlice";
 
@@ -23,12 +23,24 @@ const HomeWrap = () => {
 
 const HomeDrawer = () => {
     const initContentTypes = useSelector(homeSelectors.getContentTypes())
-    const [contentTypes, setContentTypes] = useState<Array<ContentTypesI>>(initContentTypes)
+    const initFilters = useSelector(homeSelectors.getFilters())
 
-    const [filters, setFilters] = useState<Array<FiltersType> | Array<number>>([])
+    const [contentTypes, setContentTypes] = useState<Array<ContentTypesI>>(initContentTypes)
+    const [filters, setFilters] = useState<FiltersI>(initFilters)
 
     return (
-        <Drawer.Navigator lazy drawerPosition={"right"} drawerType={"slide"} drawerContent={() => Filters({contentTypes: contentTypes, setContentType: setContentTypes})}>
+        <Drawer.Navigator
+            lazy
+            drawerPosition={"right"}
+            drawerType={"slide"}
+            drawerContent={() =>
+                Filters({
+                    contentTypes,
+                    setContentTypes,
+                    filters,
+                    setFilters,
+                })
+            }>
             <Drawer.Screen name={"Home"} component={HomeWrap}/>
         </Drawer.Navigator>
     )

@@ -20,7 +20,18 @@ export const ContentTypeView ={
     [ContentType.Mention]: "Упоминания"
 }
 
-export enum FiltersType {
+export interface FiltersI {
+    rolesType: Array<RolesI>
+    people: Array<number>
+}
+
+export interface RolesI {
+    selected: boolean
+    title: string
+    type: RoleType
+}
+
+export enum RoleType {
     Friends = "friends",
     Classmates = "classmates",
     Teachers = "teachers",
@@ -28,10 +39,10 @@ export enum FiltersType {
     Liked = "liked",
 }
 
-export const FilterTypeView = {
-    [FiltersType.Friends]: "Друзья",
-    [FiltersType.Classmates]: "Одногруппники",
-    [FiltersType.Teachers]: "Преподаватели",
-    [FiltersType.Universities]: "Университеты",
-    [FiltersType.Liked]: "Понравившиеся",
+export const RoleTypeView = {
+    [RoleType.Friends]: "Друзья",
+    [RoleType.Classmates]: "Одногруппники",
+    [RoleType.Teachers]: "Преподаватели",
+    [RoleType.Universities]: "Университеты",
+    [RoleType.Liked]: "Понравившиеся",
 }
