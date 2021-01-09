@@ -1,13 +1,55 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {Filters} from "../../components/modals/Filters"
 import {createStackNavigator} from '@react-navigation/stack'
 import {Home} from '../../screens'
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import {colors} from "../../components/stylesheet";
+import {Text} from "react-native";
+import {ButtonItemProps} from "../../components/ui/RadioButton/RadioButton";
+import {ContentType, ContentTypeView} from "../../types/types";
 
 const HomeNavigator = createStackNavigator()
 
-const HomeStack: React.FC = (props) => {
+const Drawer = createDrawerNavigator();
+
+const HomeWrap = () => {
     return (
         <HomeNavigator.Navigator headerMode={"none"}>
-            <HomeNavigator.Screen name={'Login'} component={Home}/>
+            <HomeNavigator.Screen name={'Home'} component={Home}/>
+        </HomeNavigator.Navigator>
+    )
+}
+
+const HomeDrawer = () => {
+    const [contentTypes, setContentTypes] = useState<Array<ButtonItemProps>>([
+        {
+            checked: true,
+            title: ContentTypeView[ContentType.News],
+            type: ContentType.News
+        },
+        {
+            checked: false,
+            title: ContentTypeView[ContentType.Mention],
+            type: ContentType.Mention
+        }
+    ])
+
+    return (
+        <Drawer.Navigator lazy drawerPosition={"right"} drawerType={"slide"} drawerContent={() => Filters({contentTypes: contentTypes, setContentType: setContentTypes})}>
+            <Drawer.Screen name={"Home"} component={HomeWrap}/>
+        </Drawer.Navigator>
+    )
+}
+
+const HomeStack: React.FC = (props) => {
+    return (
+        <HomeNavigator.Navigator
+            screenOptions={{
+            headerStyle: {backgroundColor: colors.BlueLagoon},
+            headerTitleStyle: {color: colors.WhiteSmoke, fontWeight: "bold", fontSize: 18, paddingLeft: 14.5, fontFamily: "Roboto"},
+        }}
+        >
+            <HomeNavigator.Screen name={"Главная"} component={HomeDrawer}/>
         </HomeNavigator.Navigator>
     );
 }

@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({title, isGoBack = true, icon}) =>
 const styles = StyleSheet.create({
     container: {
         width: device.width,
-        height: 50,
+        height: 56,
         backgroundColor: colors.BlueLagoon,
         flexDirection: "row",
         alignItems: 'center',
