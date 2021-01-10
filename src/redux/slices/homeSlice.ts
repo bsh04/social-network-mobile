@@ -11,7 +11,7 @@ interface SliceState {
 }
 
 const initFilters = {
-    people: [],
+    people: [2, 15, 22, 12, 13, 14],
     rolesType: [...Object.values(RoleType)].map(role => ({
         selected: false,
         title: RoleTypeView[role],

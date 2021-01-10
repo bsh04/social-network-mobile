@@ -28,9 +28,7 @@ const RadioButtonItem: React.FC<RadioButtonItemProps> = ({setChecked, item, last
 
 export const RadioButton: React.FC<RadioButtonProps> = ({items, setItems}) => {
     const handleChangeChecked = (type: ContentType) => {
-        const newItems = [...items]
-        newItems.map(item => item.type === type ? item.checked = true : item.checked = false)
-        setItems(newItems)
+        setItems([...items].map(item => item.type === type ? {...item, checked: true} : {...item, checked: false}))
     }
 
     return (

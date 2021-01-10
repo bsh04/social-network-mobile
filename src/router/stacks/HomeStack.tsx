@@ -22,25 +22,12 @@ const HomeWrap = () => {
 }
 
 const HomeDrawer = () => {
-    const initContentTypes = useSelector(homeSelectors.getContentTypes())
-    const initFilters = useSelector(homeSelectors.getFilters())
-
-    const [contentTypes, setContentTypes] = useState<Array<ContentTypesI>>(initContentTypes)
-    const [filters, setFilters] = useState<FiltersI>(initFilters)
-
     return (
         <Drawer.Navigator
             lazy
             drawerPosition={"right"}
             drawerType={"slide"}
-            drawerContent={() =>
-                Filters({
-                    contentTypes,
-                    setContentTypes,
-                    filters,
-                    setFilters,
-                })
-            }>
+            drawerContent={() => <Filters />}>
             <Drawer.Screen name={"Home"} component={HomeWrap}/>
         </Drawer.Navigator>
     )

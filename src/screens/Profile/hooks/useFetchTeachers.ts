@@ -2,7 +2,7 @@ import {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {teachersSlice, teachersSelectors} from "../../../redux/slices/teachersSlice"
 import {userSelectors} from "../../../redux/slices/userSlice"
-import {Persons} from "../../../types/interfaces"
+import {mockTeachers} from "../../../mockImages/mockUsers"
 
 export const useFetchTeachers = () => {
     const dispatch = useDispatch()
@@ -18,19 +18,3 @@ export const useFetchTeachers = () => {
         fetch()
     }, [])
 }
-
-const mockTeachers = [
-    {
-        id: 2,
-        name: "Николай Свиридов"
-    },
-    {
-        id: 3,
-        name: "Давид Ибрагимов"
-    },
-    {
-        id: 4,
-        avatar: require("../../../mockImages/avatars/9.png"),
-        name: "Зинаида Дурова"
-    }
-] as Array<Persons>
