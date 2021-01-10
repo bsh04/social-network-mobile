@@ -16,9 +16,10 @@ interface CheckBoxProps {
     last: boolean
     setSelected: (id: string) => void
     withoutName?: boolean
+    disabled?: boolean
 }
 
-export const CheckBox: React.FC<CheckBoxProps> = ({item, last, setSelected, withoutName}) => {
+export const CheckBox: React.FC<CheckBoxProps> = ({item, last, setSelected, withoutName, disabled}) => {
     const {id, title, checked} = item
 
     const positionIconT = useRef(new Animated.Value(-20)).current;
@@ -40,7 +41,7 @@ export const CheckBox: React.FC<CheckBoxProps> = ({item, last, setSelected, with
     }, [checked])
 
     return (
-        <FlexBox styles={{paddingBottom: last ? 0 : 10}} flex={{directionRow: true, alignItems: "center"}} onPress={() => setSelected(id)}>
+        <FlexBox styles={{paddingBottom: last ? 0 : 10}} flex={{directionRow: true, alignItems: "center"}} onPress={disabled ? undefined : () =>  setSelected(id)}>
             <View style={styles.radio}>
                 <Animated.View style={{
                     bottom: positionIconT,
@@ -49,7 +50,7 @@ export const CheckBox: React.FC<CheckBoxProps> = ({item, last, setSelected, with
                     <Icon type={'feather'} name={"check"} style={styles.check} size={20}/>
                 </Animated.View>
             </View>
-            {!withoutName && <Text style={[styles.title, {color: checked ? colors.Black : colors.DoveGrey}]}>{title}</Text>}
+            {!withoutName && <Text style={[styles.title, {color: checked ? colors.Black : colors.DoveGrey, opacity: disabled ? .3 : 1}]}>{title}</Text>}
         </FlexBox>
     )
 }

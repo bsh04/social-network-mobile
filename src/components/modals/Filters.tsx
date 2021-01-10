@@ -11,6 +11,8 @@ import {useSelector} from "react-redux";
 import {homeSelectors} from "../../redux/slices/homeSlice";
 import {ModalAllPersonsPicker} from "./ModalAllPersonsPicker";
 import {ViewPersonsPicker} from "./ViewPersonsPicker";
+import {useSaveFilters} from "./hooks/useSaveFilters"
+import {useNavigation} from "@react-navigation/native"
 
 interface SelectedPersonProps {
     person: Persons
@@ -27,7 +29,10 @@ const SelectedPerson: React.FC<SelectedPersonProps> = ({person, setSelected}) =>
     )
 }
 
-export const Filters: React.FC = () => {
+export const Filters: React.FC<{navigation: any}> = ({navigation}) => {
+    const {save} = useSaveFilters()
+    console.log(navigation)
+
     const initFilters = useSelector(homeSelectors.getFilters())
     const initContentTypes = useSelector(homeSelectors.getContentTypes())
 
@@ -43,6 +48,7 @@ export const Filters: React.FC = () => {
 
     const handleChangeSelectedRoles = (type: string) => {
         setFilters({...filters, rolesType: [...rolesType].map(item => item.type === type ? {...item, selected: !item.selected} : {...item})})
+        setViewPersonValues("all")
     }
 
     const handleDeleteSelectedPerson = (id: number) => {
@@ -59,12 +65,23 @@ export const Filters: React.FC = () => {
     const isNewsSelected = contentTypes.find(item => item.type === ContentType.News ? item.checked : undefined)?.checked
     const {rolesType} = filters
 
+
+    const handleSave = () => {
+        save(contentTypes, filters)
+        navigation.openDrawer()
+    }
+
+    useEffect(() => {
+        setFilters({...filters, people: selectedPersonsIds})
+    }, [selectedPersons])
+
     useEffect(() => {
         if (viewPersonValues === "all" || viewPersonValues === "none") {
             setSelectedPersons([])
         } else {
             setSelectedPersons(initSelectedPersons)
         }
+        if (viewPersonValues !== "all") setFilters({...filters, rolesType: filters.rolesType.map(item => ({...item, selected: false}))})
     }, [viewPersonValues])
 
     return (
@@ -78,6 +95,7 @@ export const Filters: React.FC = () => {
                         <>
                             <Text style={[styles.sectionTitle]}>Тип контента</Text>
                             {rolesType.map((item, index) => <CheckBox
+                                disabled={viewPersonValues === "selectively"}
                                 setSelected={handleChangeSelectedRoles}
                                 item={{
                                     checked: item.selected,
@@ -105,6 +123,7 @@ export const Filters: React.FC = () => {
                 </FlexBox>
             </ScrollView>
             <CustomButton
+                onPress={handleSave}
                 mainStyles={{paddingHorizontal: 20, paddingTop: 10, marginBottom: 10}}
                 title={"Применить"}
             />

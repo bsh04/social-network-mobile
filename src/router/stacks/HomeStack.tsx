@@ -4,10 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import {Home} from '../../screens'
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {colors} from "../../components/stylesheet";
-import {Text} from "react-native";
-import {ContentType, ContentTypesI, ContentTypeView, FiltersI} from "../../types/types";
-import {useSelector} from "react-redux";
-import {homeSelectors} from "../../redux/slices/homeSlice";
+import {useNavigation} from "@react-navigation/native"
 
 const HomeNavigator = createStackNavigator()
 
@@ -22,12 +19,14 @@ const HomeWrap = () => {
 }
 
 const HomeDrawer = () => {
+    const navigation = useNavigation()
+
     return (
         <Drawer.Navigator
             lazy
             drawerPosition={"right"}
             drawerType={"slide"}
-            drawerContent={() => <Filters />}>
+            drawerContent={() => <Filters navigation={navigation} />}>
             <Drawer.Screen name={"Home"} component={HomeWrap}/>
         </Drawer.Navigator>
     )
