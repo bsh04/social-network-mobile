@@ -9,18 +9,8 @@ import {Persons} from "../../types/interfaces";
 import {Icon, Overlay} from "react-native-elements";
 import {useSelector} from "react-redux";
 import {homeSelectors} from "../../redux/slices/homeSlice";
-import {Picker} from '@react-native-picker/picker';
-import {useFetchFriends} from "../../hooks/useFetchFriends";
-import {useFetchClassmates} from "../../hooks/useFetchClassmates";
-import {useFetchTeachers} from "../../hooks/useFetchTeachers";
-import {friendsSelectors} from "../../redux/slices/friendsSlice";
-import {classmatesSelectors} from "../../redux/slices/classmatesSlice";
-import {teachersSelectors} from "../../redux/slices/teachersSlice";
-import {UsersList, UsersListRender} from "../../screens";
-import {Loading} from "../ui/Loading/Loading";
-
-interface FiltersProps {
-}
+import {ModalAllPersonsPicker} from "./ModalAllPersonsPicker";
+import {ViewPersonsPicker} from "./ViewPersonsPicker";
 
 interface SelectedPersonProps {
     person: Persons
@@ -37,117 +27,7 @@ const SelectedPerson: React.FC<SelectedPersonProps> = ({person, setSelected}) =>
     )
 }
 
-interface ViewPersonsPickerProps {
-    value: string
-    setValue: (value: "all" | "none" | "selectively") => void
-}
-
-const ViewPersonsPicker: React.FC<ViewPersonsPickerProps> = ({value, setValue}) => {
-    return (
-        <View style={styles.picker}>
-            <Picker
-                selectedValue={value}
-                style={{width: "100%", color: colors.Black, height: 30}}
-                onValueChange={(itemValue) => setValue(String(itemValue) as "all" | "none" | "selectively")}
-                dropdownIconColor={colors.White}
-            >
-                <Picker.Item label={"Все"} value={"all"} />
-                <Picker.Item label={"Никакие"} value={"none"}/>
-                <Picker.Item label={"Выборочно"} value={"selectively"} />
-            </Picker>
-        </View>
-    )
-}
-
-interface ModalAllPersonsPickerProps {
-    visible: boolean
-    setVisible: (value: boolean) => void
-    onSelected: (ids: Array<number>) => void
-    initSelectedPeople: Array<number>
-}
-
-const ModalAllPersonsPicker: React.FC<ModalAllPersonsPickerProps> = ({visible, setVisible, onSelected, initSelectedPeople}) => {
-    useFetchFriends()
-    useFetchClassmates()
-    useFetchTeachers()
-
-    const friends = useSelector(friendsSelectors.getFriends())
-    const classmates = useSelector(classmatesSelectors.getClassmates())
-    const teachers = useSelector(teachersSelectors.getTeachers())
-
-    const ListRender = {friends, classmates, teachers, liked: friends, university: friends}
-
-    const [selectedPersons, setSelectedPersons] = useState(initSelectedPeople)
-
-    const [viewRole, setViewRole] = useState<RoleType>(RoleType.Friends)
-    const [multipleSelected, setMultipleSelected] = useState<boolean>(false)
-
-    const handleAdded = (id: string) => {
-        setSelectedPersons(selectedPersons.includes(Number(id)) ? [...selectedPersons.filter(item => item !== Number(id))] : [...selectedPersons, Number(id)])
-        // onSelected([Number(id)])
-        if (!multipleSelected) {
-            setVisible(false)
-        }
-    }
-
-    // const checkBoxFormatParse = (person)
-
-    return (
-            <Overlay
-                isVisible={visible}
-                onBackdropPress={() => setVisible(false)}
-                overlayStyle={{padding: 0}}
-            >
-                <View style={styles.tabsSectionList}>
-                    <FlexBox styles={styles.tabsSectionListHeaders} flex={{directionRow: true, alignItems: "center"}}>
-                        {[...Object.values(RoleType)].map((role, index) => {
-                            if (index < 3) {
-                                return (
-                                    <TouchableOpacity
-                                        key={index}
-                                        style={[styles.tabsSectionListHeader, {borderRightWidth: index !== 2 ? 2 : 0}]}
-                                        onPress={() => setViewRole(role)}
-                                    >
-                                        <Text style={styles.tabsSectionListHeaderTitle}>{RoleTypeView[role]}</Text>
-                                    </TouchableOpacity>
-                                )
-                            }
-                        })}
-                    </FlexBox>
-                    <FlexBox styles={styles.tabsSectionListContent}>
-                        <UsersListRender
-                            selectedList={selectedPersons}
-                            data={ListRender[viewRole]}
-                            withCheckBox={multipleSelected}
-                            onLongPress={() => setMultipleSelected(!multipleSelected)}
-                            onSelectedPerson={handleAdded}
-                        />
-                        {/*{*/}
-                        {/*    ListRender[viewRole]?.map((person, index) => {*/}
-                        {/*        return (*/}
-                        {/*            <FlexBox*/}
-                        {/*                flex={{directionRow: true}}*/}
-                        {/*                key={index}*/}
-                        {/*                onLongPress={() => setMultipleSelected(true)}*/}
-                        {/*                onPress={() => handleAdded(person.id)}*/}
-                        {/*            >*/}
-                        {/*                {*/}
-                        {/*                    multipleSelected ?*/}
-                        {/*                        <CheckBox item={person} last={} setSelected={} />*/}
-                        {/*                        :*/}
-                        {/*                        <Text>{person.name}</Text>*/}
-                        {/*                }*/}
-                        {/*            </FlexBox>*/}
-                        {/*        )*/}
-                        {/*    })*/}
-                        {/*}*/}
-                    </FlexBox>
-                </View>
-            </Overlay>
-    )
-}
-
-export const Filters: React.FC<FiltersProps> = () => {
+export const Filters: React.FC = () => {
     const initFilters = useSelector(homeSelectors.getFilters())
     const initContentTypes = useSelector(homeSelectors.getContentTypes())
 
@@ -155,7 +35,8 @@ export const Filters: React.FC<FiltersProps> = () => {
     const [contentTypes, setContentTypes] = useState<Array<ContentTypesI>>(initContentTypes)
 
     const initSelectedPersons = allPersons.filter(person => filters.people.includes(person.id))
-    const [selectedPersons, setSelectedPersons] = useState<Array<Persons>>(initSelectedPersons)
+    const [selectedPersons, setSelectedPersons] = useState<Array<Persons>>([...initSelectedPersons])
+    const [selectedPersonsIds, setSelectedPersonsIds] = useState<Array<number>>([...initSelectedPersons.map(person => person.id)])
     const [viewPersonValues, setViewPersonValues] = useState<"all" | "none" | "selectively">("all")
 
     const [openModalPersons, setOpenModalPersons] = useState<boolean>(false)
@@ -166,10 +47,13 @@ export const Filters: React.FC<FiltersProps> = () => {
 
     const handleDeleteSelectedPerson = (id: number) => {
         setSelectedPersons([...selectedPersons].filter(person => person.id !== id))
+        setSelectedPersonsIds([...selectedPersonsIds.filter(item => item !== id)])
     }
 
     const handleAddSelectedPerson = (ids: Array<number>) => {
-        setSelectedPersons([...selectedPersons, ...allPersons.filter(person => ids.includes(person.id))])
+        const uniquesIds = [...selectedPersonsIds, ...ids].filter((id, index, array) => array.indexOf(id) === index)
+        setSelectedPersons([...allPersons.filter(person => uniquesIds.includes(person.id))])
+        setSelectedPersonsIds([...uniquesIds])
     }
 
     const isNewsSelected = contentTypes.find(item => item.type === ContentType.News ? item.checked : undefined)?.checked
@@ -225,7 +109,7 @@ export const Filters: React.FC<FiltersProps> = () => {
                 title={"Применить"}
             />
             <ModalAllPersonsPicker
-                initSelectedPeople={filters.people}
+                initSelectedPeople={selectedPersonsIds}
                 setVisible={setOpenModalPersons}
                 visible={openModalPersons}
                 onSelected={handleAddSelectedPerson}
@@ -266,40 +150,9 @@ const styles = StyleSheet.create({
         color: colors.LightBlack,
         paddingLeft: 10,
     },
-    picker: {
-        borderWidth: 2,
-        borderColor: colors.BlueLagoon,
-        borderRadius: 50,
-        alignItems: "center",
-        height: 30,
-        justifyContent: "center"
-    },
     pickerItem: {
         borderWidth: 1,
         borderColor: colors.Black,
         color: colors.HavelockBlue
-    },
-    tabsSectionList: {
-        width: "100%"
-    },
-    tabsSectionListHeaders: {
-        width: "100%"
-    },
-    tabsSectionListHeader: {
-        width: "30%",
-        paddingHorizontal: 5,
-        height: 40,
-        borderBottomWidth: 2,
-        borderColor: colors.Allports,
-        justifyContent: "center"
-    },
-    tabsSectionListHeaderTitle: {
-        width: '100%',
-        textAlign: "center",
-        fontWeight: "bold",
-        color: colors.LightBlack,
-    },
-    tabsSectionListContent: {
-        height: 500,
     }
 })
