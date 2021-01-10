@@ -7,9 +7,10 @@ import {classmatesSelectors} from "../../redux/slices/classmatesSlice"
 import {ParamList} from "../../types/types"
 import {useSelector} from "react-redux";
 import {Persons} from "../../types/interfaces";
-import {View, StyleSheet, Text, FlatList} from "react-native";
+import {View, StyleSheet, Text, FlatList, GestureResponderEvent} from "react-native";
 import {Image} from "react-native-elements";
 import {Loading} from "../../components/ui/Loading/Loading";
+import {CheckBox} from "../../components/ui/CheckBox/CheckBox";
 
 interface UsersListHeaderProps {
     searchValue: string
@@ -35,25 +36,64 @@ const UsersListHeader: React.FC<UsersListHeaderProps> = ({searchValue, setSearch
 
 interface UsersListRenderProps {
     data: Array<Persons>
+    onLongPress?: (event: GestureResponderEvent) => void
+    onPress?: (event: GestureResponderEvent) => void
+    withCheckBox?: boolean
+    onSelectedPerson?: (id: string) => void
+    selectedList?: Array<number>
 }
 
-const UsersListRender: React.FC<UsersListRenderProps> = ({data}) => {
+export const UsersListRender: React.FC<UsersListRenderProps> = ({
+    data,
+    onLongPress,
+    withCheckBox,
+    onPress,
+    onSelectedPerson,
+    selectedList
+}) => {
     return (
         <FlatList
-            style={styles.listContainer}
-            data={data}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({item, index, separators}) => {
-            return <FlexBox flex={{directionRow: true, alignItems: "center"}} styles={styles.item} key={index}>
-                        {
-                             item.avatar ?
-                                 <Image source={item.avatar!} containerStyle={styles.avatarContainer}/>
-                                 :
-                                 <EmptyUserAvatar style={styles.avatarContainer}/>
-                         }
-                         <Text style={styles.userName}>{item.name}</Text>
-                 </FlexBox>
-        }} />
+        style={styles.listContainer}
+        data={data}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item, index, separators}) => {
+        return <FlexBox
+            flex={{directionRow: true, alignItems: "center", justifyContent: "space-between"}}
+            styles={styles.item}
+            key={index}
+            onLongPress={onLongPress}
+            onPress={() => onSelectedPerson ? onSelectedPerson(String(item.id)) : onPress}
+        >
+            <FlexBox
+                flex={{justifyContent: "space-between", alignItems: "center", directionRow: true}}
+                onLongPress={onLongPress}
+                onPress={() => onSelectedPerson ? onSelectedPerson(String(item.id)) : onPress}
+            >
+                    {
+                         item.avatar ?
+                             <Image source={item.avatar!} containerStyle={styles.avatarContainer}/>
+                             :
+                             <EmptyUserAvatar style={styles.avatarContainer}/>
+                     }
+                     <Text style={styles.userName}>{item.name}</Text>
+            </FlexBox>
+            {
+                withCheckBox && (
+                    <CheckBox
+                        item={{
+                            title: item.name,
+                            id: String(item.id),
+                            checked: selectedList ? selectedList.includes(item.id) : true
+                        }}
+                        last={false}
+                        withoutName={true}
+                        setSelected={(id) => onSelectedPerson && onSelectedPerson(id)}
+                    />
+                )
+            }
+             </FlexBox>
+        }}
+        />
     )
 }
 

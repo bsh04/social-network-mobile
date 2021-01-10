@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from "react-native";
-import {useFetchFriends} from "../hooks/useFetchFriends"
-import {useFetchTeachers} from "../hooks/useFetchTeachers"
-import {useFetchClassmates} from "../hooks/useFetchClassmates"
+import {useFetchFriends} from "../../../hooks/useFetchFriends"
+import {useFetchTeachers} from "../../../hooks/useFetchTeachers"
+import {useFetchClassmates} from "../../../hooks/useFetchClassmates"
 import {friendsSelectors} from "../../../redux/slices/friendsSlice"
 import {classmatesSelectors} from "../../../redux/slices/classmatesSlice"
 import {teachersSelectors} from "../../../redux/slices/teachersSlice"

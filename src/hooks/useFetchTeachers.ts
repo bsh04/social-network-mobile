@@ -1,8 +1,8 @@
 import {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {teachersSlice, teachersSelectors} from "../../../redux/slices/teachersSlice"
-import {userSelectors} from "../../../redux/slices/userSlice"
-import {mockTeachers} from "../../../mockImages/mockUsers"
+import {teachersSlice, teachersSelectors} from "../redux/slices/teachersSlice"
+import {userSelectors} from "../redux/slices/userSlice"
+import {mockTeachers} from "../mockImages/mockUsers"
 
 export const useFetchTeachers = () => {
     const dispatch = useDispatch()

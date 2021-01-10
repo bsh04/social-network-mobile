@@ -16,7 +16,8 @@ export const FlexBox: React.FC<FlexBoxProps & TouchableOpacityProps> = ({
     flex,
     styles,
     onPress,
-    activeOpacity
+    activeOpacity,
+    onLongPress
 }) => {
     return (
         <TouchableOpacity style={[
@@ -28,6 +29,7 @@ export const FlexBox: React.FC<FlexBoxProps & TouchableOpacityProps> = ({
             styles
         ]}
             onPress={onPress}
+            onLongPress={onLongPress}
             activeOpacity={activeOpacity || 1}
         >
             {children}
