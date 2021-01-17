@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {Icon, Input, InputProps} from "react-native-elements"
 import {StyleSheet, View, Animated, Text} from 'react-native'
 import {colors} from '../../stylesheet'
-import {AnimatedHandler} from './InputAnimation'
+import {useAnimatedGroup} from './../../../hooks/useAnimatedGroup'
 
 interface CustomInputProps extends InputProps {
     firstInput?: boolean
@@ -35,7 +35,7 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
     })
 
     const focusHandler = () => {
-        AnimatedHandler({
+        useAnimatedGroup({
             duration: 200,
             params: [labelPositionAnim, labelSizeAnim, labelColorAnim],
             value: [-20, 14, 1]
@@ -44,7 +44,7 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
 
     useEffect(() => {
         if (value) {
-            AnimatedHandler({
+            useAnimatedGroup({
                 duration: 0,
                 params: [labelPositionAnim, labelSizeAnim, labelColorAnim],
                 value: [-20, 14, 0]
@@ -54,13 +54,13 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
 
     const blurHandler = () => {
         if (!value) {
-            AnimatedHandler({
+            useAnimatedGroup({
                 duration: 200,
                 params: [labelPositionAnim, labelSizeAnim, labelColorAnim],
                 value: [5, 18, 0]
             })
         } else {
-            AnimatedHandler({
+            useAnimatedGroup({
                 duration: 200,
                 params: [labelColorAnim],
                 value: [0]

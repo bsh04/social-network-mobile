@@ -4,7 +4,7 @@ import {RolesI, RoleType} from "../../../types/types";
 import {colors} from "../../stylesheet";
 import {FlexBox} from "../..";
 import {Icon} from "react-native-elements";
-import {animatedHandler} from "../../../hooks/useAnimatedHandler";
+import {useAnimatedGroup} from "../../../hooks/useAnimatedGroup";
 
 interface CheckboxItem {
     title: string
@@ -28,8 +28,8 @@ export const CheckBox: React.FC<CheckBoxProps> = ({item, last, setSelected, with
     const positionIconL = useRef(new Animated.Value(-15)).current;
 
     useEffect(() => {
-        if (checked) animatedHandler([positionIconT, positionIconL], [0, 1])
-        else animatedHandler([positionIconT, positionIconL], [-20, -15])
+        if (checked) useAnimatedGroup({value: [0, 1], params: [positionIconT, positionIconL], duration: 200})
+        else useAnimatedGroup({value: [-20, -15], params: [positionIconT, positionIconL], duration: 200})
     }, [checked])
 
     return (

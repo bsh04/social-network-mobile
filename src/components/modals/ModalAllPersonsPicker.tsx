@@ -11,7 +11,7 @@ import {Overlay} from "react-native-elements";
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {colors, FlexBox} from "..";
 import {UsersListRender} from "../../screens";
-import {animatedHandler} from "../../hooks/useAnimatedHandler";
+import {useAnimatedGroup} from "../../hooks/useAnimatedGroup";
 
 interface ModalAllPersonsPickerProps {
     visible: boolean
@@ -56,9 +56,17 @@ export const ModalAllPersonsPicker: React.FC<ModalAllPersonsPickerProps> = ({vis
     const handleSetMultipleSelected = async () => {
         if (!multipleSelected) {
             setMultipleSelected(true)
-            animatedHandler([heightBottomButtons, positionCheckBox], [40, 10])
+            useAnimatedGroup({
+                duration: 200,
+                params: [heightBottomButtons, positionCheckBox],
+                value: [40, 10]
+            })
         } else {
-            animatedHandler([heightBottomButtons, positionCheckBox], [0, -20])
+            useAnimatedGroup({
+                duration: 200,
+                params: [heightBottomButtons, positionCheckBox],
+                value: [0, -20]
+            })
             setTimeout(() => {
                 setMultipleSelected(false)
             }, 200)
