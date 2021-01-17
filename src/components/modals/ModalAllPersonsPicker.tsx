@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useFetchFriends} from "../../hooks/useFetchFriends";
 import {useFetchClassmates} from "../../hooks/useFetchClassmates";
 import {useFetchTeachers} from "../../hooks/useFetchTeachers";
@@ -8,9 +8,10 @@ import {classmatesSelectors} from "../../redux/slices/classmatesSlice";
 import {teachersSelectors} from "../../redux/slices/teachersSlice";
 import {RoleType, RoleTypeView} from "../../types/types";
 import {Overlay} from "react-native-elements";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Animated, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {colors, FlexBox} from "..";
 import {UsersListRender} from "../../screens";
+import {animatedHandler} from "../../hooks/useAnimatedHandler";
 
 interface ModalAllPersonsPickerProps {
     visible: boolean
@@ -27,6 +28,9 @@ export const ModalAllPersonsPicker: React.FC<ModalAllPersonsPickerProps> = ({vis
     const friends = useSelector(friendsSelectors.getFriends())
     const classmates = useSelector(classmatesSelectors.getClassmates())
     const teachers = useSelector(teachersSelectors.getTeachers())
+
+    const heightBottomButtons = useRef(new Animated.Value(0)).current;
+    const positionCheckBox = useRef(new Animated.Value(-20)).current;
 
     const ListRender = {friends, classmates, teachers, liked: friends, university: friends}
 
@@ -49,13 +53,21 @@ export const ModalAllPersonsPicker: React.FC<ModalAllPersonsPickerProps> = ({vis
         setVisible(false)
     }
 
+    const handleSetMultipleSelected = async () => {
+        if (!multipleSelected) {
+            setMultipleSelected(true)
+            animatedHandler([heightBottomButtons, positionCheckBox], [40, 10])
+        } else {
+            animatedHandler([heightBottomButtons, positionCheckBox], [0, -20])
+            setTimeout(() => {
+                setMultipleSelected(false)
+            }, 200)
+        }
+    }
+
     useEffect(() => {
         if (!visible) setMultipleSelected(false)
     }, [visible])
-
-    useEffect(() => {
-        setSelectedPersons(initSelectedPeople)
-    }, [initSelectedPeople])
 
     return (
         <Overlay
@@ -70,7 +82,10 @@ export const ModalAllPersonsPicker: React.FC<ModalAllPersonsPickerProps> = ({vis
                             return (
                                 <TouchableOpacity
                                     key={index}
-                                    style={[styles.tabsSectionListHeader, {borderRightWidth: index !== 2 ? 1 : 0}]}
+                                    style={[styles.tabsSectionListHeader, {
+                                            borderRightWidth: index !== 2 ? 1 : 0,
+                                            backgroundColor: viewRole === role ? colors.BlueGray : undefined
+                                        }]}
                                     onPress={() => setViewRole(role)}
                                 >
                                     <Text style={styles.tabsSectionListHeaderTitle}>{RoleTypeView[role]}</Text>
@@ -81,29 +96,33 @@ export const ModalAllPersonsPicker: React.FC<ModalAllPersonsPickerProps> = ({vis
                 </FlexBox>
                 <FlexBox styles={styles.tabsSectionListContent}>
                     <UsersListRender
+                        propsStyles={{paddingRight: 0}}
+                        positionCheckBox={positionCheckBox}
                         selectedList={selectedPersons}
                         data={ListRender[viewRole]}
                         withCheckBox={multipleSelected}
-                        onLongPress={() => setMultipleSelected(!multipleSelected)}
+                        onLongPress={handleSetMultipleSelected}
                         onSelectedPerson={handleAdded}
                     />
                 </FlexBox>
                 {
                     multipleSelected && (
-                        <FlexBox styles={styles.tabsSectionList} flex={{directionRow: true}}>
-                            <TouchableOpacity
-                                style={[styles.tabsSectionListFooter, {borderRightWidth: 1, borderColor: colors.LightBlack}]}
-                                onPress={handleSubmit}
-                            >
-                                <Text style={styles.tabsSectionListHeaderTitle}>Добавить</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.tabsSectionListFooter]}
-                                onPress={() => setVisible(false)}
-                            >
-                                <Text style={styles.tabsSectionListHeaderTitle}>Отменить</Text>
-                            </TouchableOpacity>
-                        </FlexBox>
+                        <Animated.View style={{height: heightBottomButtons, width: "100%"}}>
+                            <FlexBox styles={[styles.tabsSectionList]} flex={{directionRow: true}}>
+                                <TouchableOpacity
+                                    style={[styles.tabsSectionListFooter, {borderRightWidth: 1, borderColor: colors.LightBlack}]}
+                                    onPress={handleSubmit}
+                                >
+                                    <Text style={styles.tabsSectionListHeaderTitle}>Добавить</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.tabsSectionListFooter]}
+                                    onPress={() => setVisible(false)}
+                                >
+                                    <Text style={styles.tabsSectionListHeaderTitle}>Отменить</Text>
+                                </TouchableOpacity>
+                            </FlexBox>
+                        </Animated.View>
                     )
                 }
             </View>
@@ -113,7 +132,8 @@ export const ModalAllPersonsPicker: React.FC<ModalAllPersonsPickerProps> = ({vis
 
 const styles = StyleSheet.create({
     tabsSectionList: {
-        width: "100%"
+        width: "100%",
+        overflow: "hidden",
     },
     tabsSectionListHeaders: {
         width: "100%"

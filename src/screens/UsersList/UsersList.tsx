@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {colors, CustomInput, EmptyUserAvatar, FlexBox, Header, InWorkScreen, MainLayout} from "../../components";
 import {useRoute, RouteProp} from "@react-navigation/native"
 import {teachersSelectors} from "../../redux/slices/teachersSlice"
@@ -7,7 +7,7 @@ import {classmatesSelectors} from "../../redux/slices/classmatesSlice"
 import {ParamList} from "../../types/types"
 import {useSelector} from "react-redux";
 import {Persons} from "../../types/interfaces";
-import {View, StyleSheet, Text, FlatList, GestureResponderEvent} from "react-native";
+import {View, StyleSheet, Text, FlatList, GestureResponderEvent, Animated, ViewStyle} from "react-native";
 import {Image} from "react-native-elements";
 import {Loading} from "../../components/ui/Loading/Loading";
 import {CheckBox} from "../../components/ui/CheckBox/CheckBox";
@@ -41,6 +41,8 @@ interface UsersListRenderProps {
     withCheckBox?: boolean
     onSelectedPerson?: (id: string) => void
     selectedList?: Array<number>
+    positionCheckBox?: number | Animated.Value
+    propsStyles?: ViewStyle
 }
 
 export const UsersListRender: React.FC<UsersListRenderProps> = ({
@@ -49,11 +51,13 @@ export const UsersListRender: React.FC<UsersListRenderProps> = ({
     withCheckBox,
     onPress,
     onSelectedPerson,
-    selectedList
+    selectedList,
+    positionCheckBox,
+    propsStyles,
 }) => {
     return (
         <FlatList
-        style={styles.listContainer}
+        style={[styles.listContainer, propsStyles]}
         data={data}
         keyExtractor={item => item.id.toString()}
         renderItem={({item, index, separators}) => {
@@ -79,16 +83,18 @@ export const UsersListRender: React.FC<UsersListRenderProps> = ({
             </FlexBox>
             {
                 withCheckBox && (
-                    <CheckBox
-                        item={{
-                            title: item.name,
-                            id: String(item.id),
-                            checked: selectedList ? selectedList.includes(item.id) : true
-                        }}
-                        last={false}
-                        withoutName={true}
-                        setSelected={(id) => onSelectedPerson && onSelectedPerson(id)}
-                    />
+                    <Animated.View style={{right: positionCheckBox}}>
+                        <CheckBox
+                            item={{
+                                title: item.name,
+                                id: String(item.id),
+                                checked: selectedList ? selectedList.includes(item.id) : true
+                            }}
+                            last={true}
+                            withoutName={true}
+                            setSelected={(id) => onSelectedPerson && onSelectedPerson(id)}
+                        />
+                    </Animated.View>
                 )
             }
              </FlexBox>
@@ -156,6 +162,7 @@ const styles = StyleSheet.create({
     },
     item: {
         paddingVertical: 5,
+        overflow: "hidden",
     },
     userName: {
         paddingLeft: 10,

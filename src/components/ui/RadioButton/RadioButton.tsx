@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     radio: {
         borderRadius: 50,
         borderWidth: 1,
-        borderColor: colors.Gray,
+        borderColor: colors.DoveGrey,
         width: 20,
         height: 20,
         alignItems: "center",

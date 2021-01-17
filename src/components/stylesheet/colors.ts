@@ -14,6 +14,7 @@ export const colors = {
     Black: '#19191a',
     Pelorous: '#17a2b8',
     DoveGrey: '#666666',
+    BlueGray: "#ced9df",
     LightBlack: '#444444',
     GreyishBrown: '#303030',
     Dark: '#222222',

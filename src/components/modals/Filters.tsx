@@ -12,7 +12,6 @@ import {homeSelectors} from "../../redux/slices/homeSlice";
 import {ModalAllPersonsPicker} from "./ModalAllPersonsPicker";
 import {ViewPersonsPicker} from "./ViewPersonsPicker";
 import {useSaveFilters} from "./hooks/useSaveFilters"
-import {useNavigation} from "@react-navigation/native"
 
 interface SelectedPersonProps {
     person: Persons
@@ -24,14 +23,20 @@ const SelectedPerson: React.FC<SelectedPersonProps> = ({person, setSelected}) =>
     return (
         <FlexBox styles={styles.selectedPersonContainer} flex={{alignItems: "center", justifyContent: "space-between", directionRow: true}}>
             <Text numberOfLines={1} lineBreakMode={"clip"} style={styles.selectedPersonName}>{name}</Text>
-            <Icon type={"antdesign"} name={"close"} color={colors.LightBlack} containerStyle={{marginRight: 5}} size={20} onPress={() => setSelected(id)} />
+            <Icon
+                type={"antdesign"}
+                name={"close"}
+                color={colors.LightBlack}
+                containerStyle={{marginRight: 5}}
+                size={20}
+                onPress={() => setSelected(id)}
+            />
         </FlexBox>
     )
 }
 
 export const Filters: React.FC<{navigation: any}> = ({navigation}) => {
     const {save} = useSaveFilters()
-    console.log(navigation)
 
     const initFilters = useSelector(homeSelectors.getFilters())
     const initContentTypes = useSelector(homeSelectors.getContentTypes())
@@ -139,7 +144,6 @@ export const Filters: React.FC<{navigation: any}> = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.WhiteSmoke,
         height: "100%",
     },
     title: {
