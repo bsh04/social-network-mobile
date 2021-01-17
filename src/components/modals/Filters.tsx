@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {colors, CustomButton, FlexBox} from "..";
 import {RadioButton} from "../ui/RadioButton/RadioButton";
-import {ContentType, ContentTypesI, FiltersI, RoleType, RoleTypeView} from "../../types/types";
+import {ContentType, ContentTypesI, ContentTypeView, FiltersI, RoleType, RoleTypeView} from "../../types/types";
 import {CheckBox} from "../ui/CheckBox/CheckBox";
 import {allPersons} from "../../mockImages/mockUsers"
 import {Persons} from "../../types/interfaces";
@@ -35,7 +35,7 @@ const SelectedPerson: React.FC<SelectedPersonProps> = ({person, setSelected}) =>
     )
 }
 
-export const Filters: React.FC<{navigation: any}> = ({navigation}) => {
+export const Filters: React.FC = () => {
     const {save} = useSaveFilters()
 
     const initFilters = useSelector(homeSelectors.getFilters())
@@ -43,7 +43,6 @@ export const Filters: React.FC<{navigation: any}> = ({navigation}) => {
 
     const [filters, setFilters] = useState<FiltersI>(initFilters)
     const [contentTypes, setContentTypes] = useState<Array<ContentTypesI>>(initContentTypes)
-
     const initSelectedPersons = allPersons.filter(person => filters.people.includes(person.id))
     const [selectedPersons, setSelectedPersons] = useState<Array<Persons>>([...initSelectedPersons])
     const [selectedPersonsIds, setSelectedPersonsIds] = useState<Array<number>>([...initSelectedPersons.map(person => person.id)])
@@ -72,8 +71,12 @@ export const Filters: React.FC<{navigation: any}> = ({navigation}) => {
 
 
     const handleSave = () => {
-        save(contentTypes, filters)
-        navigation.openDrawer()
+        const isMentionsSelected = contentTypes.filter(type => type.checked)[0].title === ContentTypeView[ContentType.Mention]
+        let data = Object.assign({}, filters)
+        if (isMentionsSelected) {
+            data = {people: [], rolesType: data.rolesType.map(role => ({...role, selected: false}))}
+        }
+        save(contentTypes, data)
     }
 
     useEffect(() => {

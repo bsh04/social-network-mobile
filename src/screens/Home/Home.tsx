@@ -1,18 +1,33 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScrollView, Text, View, StyleSheet, Animated, TouchableOpacity} from "react-native";
 import {colors, device, FlexBox, Header} from "../../components";
 import {Icon} from "react-native-elements";
 import {useNavigation} from "@react-navigation/native"
-import {} from "@react-navigation/drawer"
+import {homeSelectors} from "../../redux/slices/homeSlice"
+import {useSelector} from "react-redux";
+import {allPersons} from "../../mockImages/mockUsers"
 
 export const Home: React.FC = ({navigation} : React.ComponentProps<any>) => {
     // const navigation = useNavigation()
     const menuHeightValue = useRef(new Animated.Value(40)).current;
+    const initFilters = useSelector(homeSelectors.getFilters())
+    const contentType = useSelector(homeSelectors.getSelectedContentType())
+    const selectedRoles = initFilters.rolesType.filter(role => role.selected)
 
-    const [isOpenMenu, setOpenMenu] = useState<boolean>(true)
+    const filters = useMemo(() => selectedRoles.length > 0
+            ? selectedRoles.map(role => role.title)
+            : allPersons.filter(person => initFilters.people.includes(person.id)).map(person => person.name), [initFilters])
+
+    const [isOpenMenu, setOpenMenu] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (filters.length === 0) {
+            setOpenMenu(false)
+        }
+    }, [filters])
 
     const handleToggle = () => {
-        setOpenMenu(!isOpenMenu)
+        if (filters.length > 0) setOpenMenu(!isOpenMenu)
     }
 
     const animatedHandler = (item: Animated.Value, value: number) => {
@@ -24,7 +39,7 @@ export const Home: React.FC = ({navigation} : React.ComponentProps<any>) => {
     }
 
     useEffect(() => {
-        if (isOpenMenu) {
+        if (!isOpenMenu) {
            animatedHandler(menuHeightValue, 40)
         } else {
             animatedHandler(menuHeightValue, 200)
@@ -35,18 +50,24 @@ export const Home: React.FC = ({navigation} : React.ComponentProps<any>) => {
         <>
             <>
                 <Animated.View style={[styles.menuContainer, {
-                    maxHeight: menuHeightValue
+                    maxHeight: menuHeightValue,
+                    paddingBottom: isOpenMenu ? 40 : 0
                 }]}>
                     <FlexBox styles={styles.menuHeader} flex={{justifyContent: "space-between", alignItems: "center", directionRow: true}}>
-                        <Text style={styles.contentType}>Новости</Text>
+                        <Text style={styles.contentType}>{contentType}</Text>
                         <Icon name={"ios-options"} type={"ionicon"} color={colors.White} onPress={() => navigation.openDrawer()}/>
                     </FlexBox>
-                    <FlexBox style={styles.paramsContainer}>
-                        <Text>вторая</Text>
-                        <Text>вторая</Text>
-                    </FlexBox>
-                    <TouchableOpacity style={styles.toggleContainer} onPress={handleToggle}>
-                        <View style={[styles.toggle]} >
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        <FlexBox style={styles.paramsContainer} flex={{directionRow: true}}>
+                            {filters.map((item, index) => (
+                                <View key={index} style={styles.selectedFilterItem}>
+                                    <Text style={styles.selectedFilterItemText}>{item}</Text>
+                                </View>
+                            ))}
+                        </FlexBox>
+                    </ScrollView>
+                    <TouchableOpacity style={styles.toggleContainer} disabled={filters.length === 0} onPress={handleToggle}>
+                        <View style={[styles.toggle, {opacity: filters.length === 0 ? .5 : undefined}]}>
                             <Icon
                                 name={`keyboard-arrow-${isOpenMenu ? "up" : "down"}`}
                                 type={"material"}
@@ -56,8 +77,6 @@ export const Home: React.FC = ({navigation} : React.ComponentProps<any>) => {
                         </View>
                     </TouchableOpacity>
                 </Animated.View>
-                <ScrollView>
-                </ScrollView>
                 </>
         </>
     );
@@ -65,21 +84,23 @@ export const Home: React.FC = ({navigation} : React.ComponentProps<any>) => {
 
 const styles = StyleSheet.create({
     menuContainer: {
-        paddingHorizontal: 10,
         backgroundColor: colors.HavelockBlue,
         overflow: "hidden",
         paddingBottom: 10,
     },
     contentType: {
         color: colors.White,
+        fontSize: 18,
     },
     menuHeader: {
         height: 40,
         position: "relative",
+        paddingHorizontal: 10
     },
     paramsContainer: {
-        position: "absolute"
-
+        position: "relative",
+        width: "100%",
+        flexWrap: "wrap",
     },
     toggleContainer: {
         position: "absolute",
@@ -103,5 +124,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.BlueLagoon,
         alignItems: "center",
         justifyContent: "center"
+    },
+    selectedFilterItem: {
+        paddingHorizontal: 10,
+        paddingBottom: 5,
+        paddingTop: 2,
+        flexDirection: "row",
+        borderRadius: 50,
+        backgroundColor: colors.ButtonTypes.BGColor.primary,
+        marginHorizontal: 5,
+    },
+    selectedFilterItemText: {
+        color: colors.White,
+        textAlignVertical: "center"
     }
 })

@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
         height: 500,
     },
     tabsSectionListFooter: {
+        backgroundColor: colors.Gray,
         width: "45%",
         paddingHorizontal: 5,
         height: 40,

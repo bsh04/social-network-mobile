@@ -11,7 +11,7 @@ interface SliceState {
 }
 
 const initFilters = {
-    people: [2, 15],
+    people: [],
     rolesType: [...Object.values(RoleType)].map(role => ({
         selected: false,
         title: RoleTypeView[role],
@@ -74,7 +74,9 @@ interface Store {
 export const homeSelectors = {
     getContent: () => (state: Store) => state.home.content,
     getContentTypes: () => (state: Store) => state.home.contentTypes,
+    getSelectedContentType: () => (state: Store) => state.home.contentTypes.filter((item) => item.checked)[0].title,
     getStatus: () => (state: Store) => state.home.fetchStatus,
     getFilters: () => (state: Store) => state.home.filters,
+    getSelectedPersons: () => (state: Store) => state.home.filters.people,
     getOffset: () => (state: Store) => state.home.offset,
 }

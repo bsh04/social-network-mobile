@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import {Home} from '../../screens'
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {colors} from "../../components/stylesheet";
-import {useNavigation} from "@react-navigation/native"
+import {useNavigation, DrawerActions} from "@react-navigation/native"
 
 const HomeNavigator = createStackNavigator()
 
@@ -19,14 +19,12 @@ const HomeWrap = () => {
 }
 
 const HomeDrawer = () => {
-    const navigation = useNavigation()
-
     return (
         <Drawer.Navigator
             lazy
             drawerPosition={"right"}
             drawerType={"slide"}
-            drawerContent={() => <Filters navigation={navigation} />}>
+            drawerContent={() => <Filters />}>
             <Drawer.Screen name={"Home"} component={HomeWrap}/>
         </Drawer.Navigator>
     )
