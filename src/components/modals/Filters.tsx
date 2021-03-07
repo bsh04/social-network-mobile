@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {colors, CustomButton, FlexBox} from "..";
-import {RadioButton} from "../ui/RadioButton/RadioButton";
-import {ContentType, ContentTypeView, RoleType, RoleTypeView} from "../../types/types";
+import {FiltersRadioButton} from "../ui/RadioButton/RadioButton";
+import {ContentType, ContentTypeView, FORM, RoleType, RoleTypeView} from "../../types/types";
 import {CheckBox} from "../ui/CheckBox/CheckBox";
 import {allPersons} from "../../mockImages/mockUsers"
 import {ContentTypesI, FiltersI, Persons} from "../../types/interfaces";
 import {Icon, Overlay} from "react-native-elements";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {homeSelectors} from "../../redux/slices/homeSlice";
 import {ModalAllPersonsPicker} from "./ModalAllPersonsPicker";
 import {ViewPersonsPicker} from "./ViewPersonsPicker";
 import {useSaveFilters} from "./hooks/useSaveFilters"
+import {formValueSelector, InjectedFormProps, reduxForm, getFormValues, change} from "redux-form";
 
 interface SelectedPersonProps {
     person: Persons
@@ -35,23 +36,32 @@ const SelectedPerson: React.FC<SelectedPersonProps> = ({person, setSelected}) =>
     )
 }
 
-export const Filters: React.FC = () => {
+interface FiltersFormValues {
+    contentTypes: Array<ContentTypesI>
+    filters: FiltersI
+}
+
+interface FiltersFormProps {
+
+}
+
+const FiltersForm: React.FC<InjectedFormProps<FiltersFormValues>> = () => {
     const {save} = useSaveFilters()
+    const dispatch = useDispatch()
 
-    const initFilters = useSelector(homeSelectors.getFilters())
-    const initContentTypes = useSelector(homeSelectors.getContentTypes())
+    // const [filters, setFilters] = useState<FiltersI>(initFilters!)
 
-    const [filters, setFilters] = useState<FiltersI>(initFilters)
-    const [contentTypes, setContentTypes] = useState<Array<ContentTypesI>>(initContentTypes)
-    const initSelectedPersons = allPersons.filter(person => filters.people.includes(person.id))
-    const [selectedPersons, setSelectedPersons] = useState<Array<Persons>>([...initSelectedPersons])
-    const [selectedPersonsIds, setSelectedPersonsIds] = useState<Array<number>>([...initSelectedPersons.map(person => person.id)])
     const [viewPersonValues, setViewPersonValues] = useState<"all" | "none" | "selectively">("all")
 
+    const contentTypes: Array<ContentTypesI> = useSelector(state => formValueSelector(FORM.filters)(state, "contentTypes"))
+    const filters: FiltersI = useSelector(state => formValueSelector(FORM.filters)(state, "filters"))
+    const initSelectedPersons = allPersons.filter(person => filters?.people.includes(person.id))
+    const [selectedPersons, setSelectedPersons] = useState<Array<Persons>>([...initSelectedPersons])
+    const [selectedPersonsIds, setSelectedPersonsIds] = useState<Array<number>>([...initSelectedPersons.map(person => person.id)])
     const [openModalPersons, setOpenModalPersons] = useState<boolean>(false)
 
     const handleChangeSelectedRoles = (type: string) => {
-        setFilters({...filters, rolesType: [...rolesType].map(item => item.type === type ? {...item, selected: !item.selected} : {...item})})
+        dispatch(change(FORM.filters, "filters", {...filters, rolesType: [...rolesType].map(item => item.type === type ? {...item, selected: !item.selected} : {...item})}))
         setViewPersonValues("all")
     }
 
@@ -66,7 +76,7 @@ export const Filters: React.FC = () => {
         setSelectedPersonsIds([...uniquesIds])
     }
 
-    const isNewsSelected = contentTypes.find(item => item.type === ContentType.News ? item.checked : undefined)?.checked
+    const isNewsSelected = contentTypes?.find(item => item.type === ContentType.News ? item.checked : undefined)?.checked
     const {rolesType} = filters
 
 
@@ -80,7 +90,7 @@ export const Filters: React.FC = () => {
     }
 
     useEffect(() => {
-        setFilters({...filters, people: selectedPersonsIds})
+        dispatch(change(FORM.filters, "filters", {...filters, people: selectedPersonsIds}))
     }, [selectedPersons])
 
     useEffect(() => {
@@ -89,7 +99,7 @@ export const Filters: React.FC = () => {
         } else {
             setSelectedPersons(initSelectedPersons)
         }
-        if (viewPersonValues !== "all") setFilters({...filters, rolesType: filters.rolesType.map(item => ({...item, selected: false}))})
+        if (viewPersonValues !== "all") dispatch(change(FORM.filters, "filters", {...filters, rolesType: filters.rolesType.map(item => ({...item, selected: false}))}))
     }, [viewPersonValues])
 
     return (
@@ -98,7 +108,7 @@ export const Filters: React.FC = () => {
                 <FlexBox styles={{paddingHorizontal: 20}} flex={{directionRow: false}}>
                     <Text style={styles.title}>Фильтры</Text>
                     <Text style={styles.sectionTitle}>Тип ленты</Text>
-                    <RadioButton items={contentTypes} setItems={setContentTypes} />
+                    <FiltersRadioButton formName={FORM.filters} fieldName={"contentTypes"} />
                     {isNewsSelected &&
                         <>
                             <Text style={[styles.sectionTitle]}>Тип контента</Text>
@@ -144,6 +154,17 @@ export const Filters: React.FC = () => {
         </View>
     );
 };
+
+const WrappedFiltersForm = reduxForm<FiltersFormValues>({
+    form: FORM.filters
+})(FiltersForm)
+
+export const Filters: React.FC = () => {
+    const filters = useSelector(homeSelectors.getFilters())
+    const contentTypes = useSelector(homeSelectors.getContentTypes())
+    return <WrappedFiltersForm initialValues={{contentTypes, filters}}/>
+}
+
 
 const styles = StyleSheet.create({
     container: {

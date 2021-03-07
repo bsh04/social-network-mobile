@@ -1,12 +1,15 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {View, StyleSheet, Text} from "react-native";
 import {colors, FlexBox} from "../..";
-import {ContentType} from "../../../types/types";
+import {ContentType, FORM} from "../../../types/types";
 import {ContentTypesI} from "../../../types/interfaces";
+import {useDispatch, useSelector} from "react-redux";
+import {change, formValueSelector} from "redux-form";
 
 interface RadioButtonProps {
-    items: Array<ContentTypesI>
-    setItems: Dispatch<SetStateAction<ContentTypesI[]>>
+    setItems?: Dispatch<SetStateAction<ContentTypesI[]>>
+    formName: string
+    fieldName: string
 }
 
 interface RadioButtonItemProps {
@@ -27,14 +30,16 @@ const RadioButtonItem: React.FC<RadioButtonItemProps> = ({setChecked, item, last
     )
 }
 
-export const RadioButton: React.FC<RadioButtonProps> = ({items, setItems}) => {
+export const FiltersRadioButton: React.FC<RadioButtonProps> = ({setItems, formName, fieldName}) => {
+    const dispatch = useDispatch()
+    const items: Array<ContentTypesI> = useSelector(state => formValueSelector(formName)(state, fieldName))
     const handleChangeChecked = (type: ContentType) => {
-        setItems([...items].map(item => item.type === type ? {...item, checked: true} : {...item, checked: false}))
+        dispatch(change(formName, fieldName, [...items].map(item => item.type === type ? {...item, checked: true} : {...item, checked: false})))
     }
 
     return (
         <View style={styles.container}>
-            {items.map((item, index) => {
+            {items?.map((item, index) => {
                 return <RadioButtonItem setChecked={handleChangeChecked} key={index} item={item} last={index === items.length} />
             })}
         </View>

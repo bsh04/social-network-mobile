@@ -4,6 +4,7 @@ import {LoginStack} from './stacks'
 import {DrawerNavigator} from './drawer/Drawer'
 import {useSelector} from "react-redux"
 import {userSelectors} from "../redux/slices/userSlice"
+import {BottomTabs} from "./bottomMenu/BottomMenu";
 
 export const Router: React.FC = () => {
     const userData = useSelector(userSelectors.getUser())
@@ -18,7 +19,7 @@ export const Router: React.FC = () => {
             {
                 token
                     ?
-                    <DrawerNavigator/>
+                    <BottomTabs/>
                     :
                     <LoginStack/>
             }

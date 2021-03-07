@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigation} from "@react-navigation/native"
 import {CustomInput, CustomButton} from "../../components";
 import {
@@ -9,7 +9,7 @@ import {
     TextInput,
     TextInputBase,
     TextInputProps,
-    View,
+    View, Alert,
 } from "react-native";
 import {Icon} from 'react-native-elements';
 import {LoginFormProps, LoginFormValues} from './LoginInterfaces'
@@ -18,8 +18,9 @@ import {formValueSelector, Field, getFormValues, InjectedFormProps, reduxForm, c
 import {useDispatch, useSelector} from "react-redux";
 import {FORM} from "../../types/types";
 import {useLogin} from "../../hooks";
+import {APIStatus} from "../../types/interfaces";
 
-const LoginForm: React.FC<LoginFormProps & InjectedFormProps<LoginFormValues, LoginFormProps>> = ({loading, handleSubmit}) => {
+const LoginForm: React.FC<LoginFormProps & InjectedFormProps<LoginFormValues, LoginFormProps>> = ({handleSubmit}) => {
 
     const navigation = useNavigation()
     const dispatch = useDispatch()
@@ -32,6 +33,15 @@ const LoginForm: React.FC<LoginFormProps & InjectedFormProps<LoginFormValues, Lo
     const handleChange = (field: string) => (value: string) => {
         dispatch(change(FORM.login, field, value))
     }
+
+    useEffect(() => {
+        if (status === APIStatus.Failure) {
+            Alert.alert(
+                "Ошибка",
+                "Пользователя с такими данными нет",
+            )
+        }
+    }, [status])
 
     return (
         <View>
@@ -54,7 +64,7 @@ const LoginForm: React.FC<LoginFormProps & InjectedFormProps<LoginFormValues, Lo
             <CustomButton
                 title={'Войти'}
                 buttonType={"success"}
-                loading={loading}
+                loading={status === APIStatus.Loading}
                 containerStyle={{width: device.width * .5}}
                 onPress={handleSubmit(auth)}
             />

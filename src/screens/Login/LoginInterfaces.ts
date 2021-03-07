@@ -4,5 +4,4 @@ export interface LoginFormValues {
 }
 
 export interface LoginFormProps {
-    loading: boolean
 }
