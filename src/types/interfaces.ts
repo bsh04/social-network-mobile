@@ -1,3 +1,5 @@
+import {ContentType, RoleType} from "./types";
+
 export enum APIStatus {
     Initial = "Initial",
     Loading = "Loading",
@@ -45,4 +47,22 @@ export interface News {
     comments?: Array<NewsComment>
     sharedCount: number
     shared?: Array<number>
+}
+
+export interface ContentTypesI {
+    checked: boolean
+    title: string
+    type: ContentType
+}
+
+
+export interface FiltersI {
+    rolesType: Array<RolesI>
+    people: Array<number>
+}
+
+export interface RolesI {
+    selected: boolean
+    title: string
+    type: RoleType
 }

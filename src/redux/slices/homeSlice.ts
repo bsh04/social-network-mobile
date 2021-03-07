@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {APIStatus, News} from "../../types/interfaces";
-import {ContentType, ContentTypesI, ContentTypeView, FiltersI, RoleType, RoleTypeView} from "../../types/types";
+import {ContentType, ContentTypeView, RoleType, RoleTypeView} from "../../types/types";
+import {FiltersI, ContentTypesI} from "../../types/interfaces";
 
 interface SliceState {
     fetchStatus: APIStatus

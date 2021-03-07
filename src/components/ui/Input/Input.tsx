@@ -2,27 +2,28 @@ import React, {useState, useRef, useEffect} from 'react';
 import {Icon, Input, InputProps} from "react-native-elements"
 import {StyleSheet, View, Animated, Text} from 'react-native'
 import {colors} from '../../stylesheet'
-import {useAnimatedGroup} from './../../../hooks/useAnimatedGroup'
+import {useAnimatedGroup} from '../../../hooks/useAnimatedGroup'
+import {WrappedFieldProps} from "redux-form";
 
-interface CustomInputProps extends InputProps {
+interface CustomInputProps extends InputProps, WrappedFieldProps {
     firstInput?: boolean
     additional?: string
     withClean?: boolean
     setValue?: (value: string) => void
 }
 
-export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
-   onChange,
+export const CustomInput: React.FC<CustomInputProps> = ({
    label,
-   value,
    onSubmitEditing,
    rightIcon,
    secureTextEntry,
    firstInput,
    additional,
    withClean,
-   setValue
-}, ref:React.ForwardedRef<any>) => {
+   setValue,
+   ...others
+}) => {
+    const {onChange, value} = others.input
 
     const [labelColorAnim] = useState<Animated.AnimatedProps<any>>(new Animated.Value(0))
 
@@ -76,7 +77,7 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
                 color: boxInterpolationColor
             }]}>{label}</Animated.Text>
             <Input
-                ref={ref}
+                {...others}
                 onFocus={focusHandler}
                 onBlur={blurHandler}
                 containerStyle={styles.containerStyle}
@@ -99,7 +100,7 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
                             undefined
                 }
                 rightIconContainerStyle={{position: "absolute", right: 0}}
-                onChange={onChange}
+                onChangeText={onChange}
                 value={value}
                 onSubmitEditing={onSubmitEditing}
                 selectionColor={colors.BlueLagoon}
@@ -108,7 +109,7 @@ export const CustomInput = React.forwardRef<InputProps, CustomInputProps>(({
             <Text style={styles.additional}>{additional}</Text>
         </View>
     )
-})
+}
 
 
 const styles = StyleSheet.create({

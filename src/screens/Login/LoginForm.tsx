@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useNavigation} from "@react-navigation/native"
 import {CustomInput, CustomButton} from "../../components";
 import {
@@ -7,44 +7,56 @@ import {
     Text,
     StyleSheet,
     TextInput,
-    TextInputProps
+    TextInputBase,
+    TextInputProps,
+    View,
 } from "react-native";
 import {Icon} from 'react-native-elements';
-import {LoginFormProps} from './LoginInterfaces'
+import {LoginFormProps, LoginFormValues} from './LoginInterfaces'
 import {colors, device} from "../../components/stylesheet";
+import {formValueSelector, Field, getFormValues, InjectedFormProps, reduxForm, change, submit} from "redux-form"
+import {useDispatch, useSelector} from "react-redux";
+import {FORM} from "../../types/types";
+import {useLogin} from "../../hooks";
 
-export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => {
+const LoginForm: React.FC<LoginFormProps & InjectedFormProps<LoginFormValues, LoginFormProps>> = ({loading, handleSubmit}) => {
 
     const navigation = useNavigation()
+    const dispatch = useDispatch()
+    const {status, auth} = useLogin()
 
-    const [email, setEmail] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
     const [openPassword, setOpenPassword] = useState<boolean>(false)
     const passwordRef = useRef<TextInputProps & TextInput>(null)
+    const data = useSelector(getFormValues(FORM.login))
+
+    const handleChange = (field: string) => (value: string) => {
+        dispatch(change(FORM.login, field, value))
+    }
 
     return (
-        <>
-            <CustomInput label={'E-mail'} value={email}
-                         firstInput={true}
-                         onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setEmail(e.nativeEvent.text)}
-                         onSubmitEditing={() => passwordRef.current?.focus()}
+        <View>
+            <Field
+                component={CustomInput}
+                name="email"
+                label="E-mail"
+                firstInput
             />
-            <CustomInput label={'Пароль'} value={password}
-                         onChange={(e: NativeSyntheticEvent<TextInputChangeEventData>) => setPassword(e.nativeEvent.text)}
-                         secureTextEntry={!openPassword}
-                         rightIcon={<Icon name={openPassword ? "eye-with-line" : "eye"}
-                                          type={"entypo"}
-                                          color={colors.BlueLagoon}
-                                          onPress={() => setOpenPassword(!openPassword)}/>}
-                         ref={passwordRef}
-
+            <Field
+                component={CustomInput}
+                name="password"
+                label="Пароль"
+                secureTextEntry={!openPassword}
+                rightIcon={<Icon name={openPassword ? "eye-with-line" : "eye"}
+                                 type={"entypo"}
+                                 color={colors.BlueLagoon}
+                                 onPress={() => setOpenPassword(!openPassword)}/>}
             />
             <CustomButton
                 title={'Войти'}
                 buttonType={"success"}
-                onPress={() => handleSubmit({email, password})}
                 loading={loading}
                 containerStyle={{width: device.width * .5}}
+                onPress={handleSubmit(auth)}
             />
             <Text style={styles.text}>Вы забыли свой пароль?</Text>
             <CustomButton
@@ -60,9 +72,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({handleSubmit, loading}) => 
                 onPress={() => navigation.navigate('Register')}
                 containerStyle={{width: device.width * .5}}
             />
-        </>
+        </View>
     );
 };
+
+export const WrappedLoginForm = reduxForm<LoginFormValues, LoginFormProps>({
+    form: FORM.login
+})(LoginForm)
+
 
 const styles = StyleSheet.create({
     text: {

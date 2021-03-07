@@ -1,7 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {View, StyleSheet, Text} from "react-native";
 import {colors, FlexBox} from "../..";
-import {ContentType, ContentTypesI} from "../../../types/types";
+import {ContentType} from "../../../types/types";
+import {ContentTypesI} from "../../../types/interfaces";
 
 interface RadioButtonProps {
     items: Array<ContentTypesI>

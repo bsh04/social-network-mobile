@@ -1,9 +1,8 @@
-export interface LoginFormParams {
+export interface LoginFormValues {
     email: string
     password: string
 }
 
 export interface LoginFormProps {
-    handleSubmit: ({email, password}: LoginFormParams) => void,
-    loading: boolean,
+    loading: boolean
 }

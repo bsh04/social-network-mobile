@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {colors, CustomButton, FlexBox} from "..";
 import {RadioButton} from "../ui/RadioButton/RadioButton";
-import {ContentType, ContentTypesI, ContentTypeView, FiltersI, RoleType, RoleTypeView} from "../../types/types";
+import {ContentType, ContentTypeView, RoleType, RoleTypeView} from "../../types/types";
 import {CheckBox} from "../ui/CheckBox/CheckBox";
 import {allPersons} from "../../mockImages/mockUsers"
-import {Persons} from "../../types/interfaces";
+import {ContentTypesI, FiltersI, Persons} from "../../types/interfaces";
 import {Icon, Overlay} from "react-native-elements";
 import {useSelector} from "react-redux";
 import {homeSelectors} from "../../redux/slices/homeSlice";

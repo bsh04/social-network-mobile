@@ -4,12 +4,6 @@ export type ParamList = {
     };
 };
 
-export interface ContentTypesI {
-    checked: boolean
-    title: string
-    type: ContentType
-}
-
 export enum ContentType {
     News = "news",
     Mention = "mention",
@@ -18,17 +12,6 @@ export enum ContentType {
 export const ContentTypeView ={
     [ContentType.News]: "Новости",
     [ContentType.Mention]: "Упоминания"
-}
-
-export interface FiltersI {
-    rolesType: Array<RolesI>
-    people: Array<number>
-}
-
-export interface RolesI {
-    selected: boolean
-    title: string
-    type: RoleType
 }
 
 export enum RoleType {
@@ -45,4 +28,10 @@ export const RoleTypeView = {
     [RoleType.Teachers]: "Преподаватели",
     [RoleType.Universities]: "Университеты",
     [RoleType.Liked]: "Понравившиеся",
+}
+
+export enum FORM {
+    login = "Login",
+    registration = "registration",
+    resetPassword = "resetPassword"
 }

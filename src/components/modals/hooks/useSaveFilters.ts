@@ -1,5 +1,5 @@
 import {useCallback} from "react";
-import {ContentTypesI, FiltersI} from "../../../types/types";
+import {ContentTypesI, FiltersI} from "../../../types/interfaces";
 import {useDispatch} from "react-redux";
 import {homeSlice} from "../../../redux/slices/homeSlice"
 import {useNavigation} from '@react-navigation/native'
